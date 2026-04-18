@@ -1,0 +1,28 @@
+% piece(NAME, X, Y, Z, Origin or Rest)
+% piece n°1 :
+cube(t, 0, 0, 0, o).	cube(t, 1, 0, 0, r).	cube(t, 2, 0, 0, r).
+						cube(t, 1, 1, 0, r).
+						cube(t, 1, 2, 0, r).
+
+% piece n°2 :
+% ...
+
+
+
+
+% ----------------
+piece(P) :- cube(P, _, _, _, o).
+
+% p3(Name, ID, X, Y, Z)
+% base piece
+p3(P, 0, X, Y, Z) :- cube(P, X, Y, Z).
+
+% 3D even permutations (0 or 2 swaps)
+p3(P, (1, SX, SY, SZ),  SX*X, SY*Y, SZ*Z) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
+p3(P, (2, SX, SY, SZ),  SX*Y, SY*Z, SZ*X) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
+p3(P, (3, SX, SY, SZ),  SX*Z, SY*X, SZ*Y) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
+
+% 3D odd permutations (1 swap)
+p3(P, (4, SX, SY, SZ),  SX*X, SY*Z, SZ*Y) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
+p3(P, (5, SX, SY, SZ),  SX*Z, SY*Y, SZ*X) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
+p3(P, (6, SX, SY, SZ),  SX*Y, SY*X, SZ*Z) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
