@@ -1,9 +1,9 @@
-% piece(NAME, X, Y, Z, Origin or Rest)
+% piece(NAME, X, Y, Z)
 % piece n°1 :
 material(t, wood).
-bit(t, 0, 0, 0, o).	bit(t, 1, 0, 0, r).	bit(t, 2, 0, 0, r).
-					bit(t, 1, 1, 0, r).
-					bit(t, 1, 2, 0, r).
+bit(t, 0, 0, 0).	bit(t, 1, 0, 0).	bit(t, 2, 0, 0).
+					bit(t, 1, 1, 0).
+					bit(t, 1, 2, 0).
 
 % piece n°2 :
 % ...
@@ -12,11 +12,11 @@ bit(t, 0, 0, 0, o).	bit(t, 1, 0, 0, r).	bit(t, 2, 0, 0, r).
 
 
 % ----------------
-piece(P) :- bit(P, _, _, _, _).
+piece(P) :- bit(P, _, _, _).
 
 % p3(Name, ID, X, Y, Z)
 % base piece
-p3(P, 0, X, Y, Z) :- bit(P, X, Y, Z, _).
+p3(P, 0, X, Y, Z) :- bit(P, X, Y, Z).
 
 % 3D even permutations (0 or 2 swaps)
 p3(P, (1, SX, SY, SZ),  SX*X, SY*Y, SZ*Z) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
