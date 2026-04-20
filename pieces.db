@@ -13,7 +13,7 @@ bit(3a, 0, 0, 0).	bit(3a, 1, 0, 0).	bit(3a, 2, 0, 0).
 
 % - - -
 material(3b, iron).
-bit(3b, 0, 0, 0).	bit(3b, 0, 1, 0).
+bit(3b, 0, 0, 0).	bit(3b, 1, 0, 0).
 bit(3b, 0, 1, 0).
 
 % 4 cubes
@@ -42,18 +42,25 @@ bit(4s, 0, 0, 0).	bit(4s, 1, 0, 0).
 					bit(4s, 1, 1, 0).	bit(4s, 2, 1, 0).
 
 % - - -
-material(4y1, dirt).
-bit(4y1, 0, 0, 0).	bit(4y1, 1, 0, 0).
-					bit(4y1, 1, 1, 0).
+material(4y, dirt).
+bit(4y, 0, 0, 0).	bit(4y, 1, 0, 0).
+					bit(4y, 1, 1, 0).
 
-bit(4y1, 1, 0, 1).
+bit(4y, 1, 0, 1).
 
 % - - -
-material(4y2, dirt).
-bit(4y2, 0, 0, 1).	bit(4y2, 1, 0, 1).
-					bit(4y2, 1, 1, 1).
+material(4q1, dirt).
+bit(4q1, 0, 0, 0).	bit(4q1, 1, 0, 0).
+					bit(4q1, 1, 1, 0).
 
-bit(4y2, 0, 0, 0).
+bit(4q1, 0, 0, 1).
+
+% - - -
+material(4q2, dirt).
+bit(4q2, 0, 0, 1).	bit(4q2, 1, 0, 1).
+					bit(4q2, 1, 1, 1).
+
+bit(4q2, 0, 0, 0).
 
 % 5 cubes
 % - - -
@@ -63,11 +70,69 @@ bit(t, 0, 0, 0).	bit(t, 1, 0, 0).	bit(t, 2, 0, 0).
 					bit(t, 1, 2, 0).
 
 % - - -
+material(u, wood).
 bit(u, 0, 0, 0).	bit(u, 1, 0, 0).	bit(u, 2, 0, 0).
 bit(u, 0, 1, 0).						bit(u, 2, 1, 0).
 
+% - - -
+material(v, wood).
+bit(v, 0, 0, 0).	bit(v, 1, 0, 0).	bit(v, 2, 0, 0).
+bit(v, 0, 1, 0).
+bit(v, 0, 2, 0).
 
+% - - -
+material(w, wood).
+bit(w, 0, 0, 0).
+bit(w, 0, 1, 0). bit(w, 1, 1, 0).
+				 bit(w, 1, 2, 0). bit(w, 2, 2, 0).
 
+% - - -
+material(x, wood).
+                 bit(x, 1, 0, 0).
+bit(x, 0, 1, 0). bit(x, 1, 1, 0). bit(x, 2, 1, 0).
+				 bit(x, 1, 2, 0).
+
+% - - -
+material(y, wood).
+bit(y, 0, 0, 0).	bit(y, 1, 0, 0).	bit(y, 2, 0, 0). bit(y, 3, 0, 0).
+					bit(y, 1, 1, 0).
+
+% - - -
+material(z, wood).
+bit(z, 0, 0, 0).	bit(z, 1, 0, 0).
+					bit(z, 1, 1, 0). 
+					bit(z, 1, 2, 0). bit(z, 2, 2, 0).
+
+% - - - 
+material(f, stone).
+					bit(f, 1, 0, 0).	bit(f, 2, 0, 0).
+bit(f, 0, 1, 0).	bit(f, 1, 1, 0).
+					bit(f, 1, 2, 0).
+
+% - - -
+material(i, stone).
+bit(i, 0, 0, 0).
+bit(i, 0, 1, 0).
+bit(i, 0, 2, 0).
+bit(i, 0, 3, 0).
+bit(i, 0, 4, 0).
+
+% - - -
+material(l, stone).
+bit(l, 0, 0, 0).	bit(l, 1, 0, 0).	bit(l, 2, 0, 0).	bit(l, 3, 0, 0).
+bit(l, 0, 1, 0).
+
+% - - -
+material(p, stone).
+bit(p, 0, 0, 0).	bit(p, 1, 0, 0).	bit(p, 2, 0, 0).
+bit(p, 0, 1, 0).	bit(p, 1, 1, 0).
+
+% - - -
+material(n, stone).
+bit(n, 0, 0, 0).
+bit(n, 0, 1, 0).
+bit(n, 0, 2, 0).	bit(n, 1, 2, 0).
+					bit(n, 1, 3, 0).
 
 % ----------------
 piece(P) :- bit(P, _, _, _).
