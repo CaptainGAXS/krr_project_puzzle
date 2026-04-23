@@ -37,3 +37,42 @@ occ(P, X0+X, Y0+Y, Z0+Z) :-
 
 
 % -------------------------------------------------
+
+% Define a weight for each material
+material_weight(iron,4).
+material_weight(stone, 3).
+material_weight(wood, 2).
+material_weight(dirt, 1).
+
+% 6 cubes directions
+face_dir( 1, 0, 0). face_dir(-1, 0, 0).
+face_dir( 0, 1, 0). face_dir( 0,-1, 0).
+face_dir( 0, 0, 1). face_dir( 0, 0,-1).
+
+% Calculate the exposed faces
+occupied(X, Y, Z) :- occ(_, X, Y, Z).
+
+% Exposed if the neighbor cell is not occupied
+exposed(P, X, Y, Z, DX, DY, DZ) :-
+    occ(P, X, Y, Z),
+    face_dir(DX, DY, DZ),
+    not occupied(X+DX, Y+DY, Z+DZ).
+
+% Calculate each layer weight
+layer(Z) :- height(H), Z = 0..H-1.
+
+% Layer weight = sum of every exposed cube weight
+layer_weight(Z, W) :-
+    layer(Z),
+    W = #sum { FW, P, X, Y, DX, DY, DZ :
+               exposed(P, X, Y, Z, DX, DY, DZ),
+               material(P, Mat),
+               material_weight(Mat, FW) }.
+
+% each layer must be heavier than the above one
+:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
+
+#show selected_piece/1.
+#show selected_variant/2.
+#show origin/4.
+#show layer_weight/2.

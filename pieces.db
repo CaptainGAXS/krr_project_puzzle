@@ -9,59 +9,59 @@ material(2, iron).
 bit(2, 0, 0, 0).	bit(2, 1, 0, 0).
 
 % - - -
-material(3a, iron).
-bit(3a, 0, 0, 0).	bit(3a, 1, 0, 0).	bit(3a, 2, 0, 0).
+material(p3a, iron).
+bit(p3a, 0, 0, 0).	bit(p3a, 1, 0, 0).	bit(p3a, 2, 0, 0).
 
 % - - -
-material(3b, iron).
-bit(3b, 0, 0, 0).	bit(3b, 1, 0, 0).
-bit(3b, 0, 1, 0).
+material(p3b, iron).
+bit(p3b, 0, 0, 0).	bit(p3b, 1, 0, 0).
+bit(p3b, 0, 1, 0).
 
 % 4 cubes
 % - - -
-material(4i, dirt).
-bit(4i, 0, 0, 0).	bit(4i, 1, 0, 0).	bit(4i, 2, 0, 0).	bit(4i, 3, 0, 0).
+material(p4i, dirt).
+bit(p4i, 0, 0, 0).	bit(p4i, 1, 0, 0).	bit(p4i, 2, 0, 0).	bit(p4i, 3, 0, 0).
 
 % - - -
-material(4l, dirt).
-bit(4l, 0, 0, 0).	bit(4l, 1, 0, 0).	bit(4l, 2, 0, 0).
-bit(4l, 0, 1, 0).
+material(p4l, dirt).
+bit(p4l, 0, 0, 0).	bit(p4l, 1, 0, 0).	bit(p4l, 2, 0, 0).
+bit(p4l, 0, 1, 0).
 
 % - - -
-material(4t, dirt).
-bit(4t, 0, 0, 0).	bit(4t, 1, 0, 0).	bit(4t, 2, 0, 0).
-					bit(4t, 1, 1, 0).
+material(p4t, dirt).
+bit(p4t, 0, 0, 0).	bit(p4t, 1, 0, 0).	bit(p4t, 2, 0, 0).
+					bit(p4t, 1, 1, 0).
 
 % - - -
-material(4o, dirt).
-bit(4o, 0, 0, 0).	bit(4o, 1, 0, 0).
-bit(4o, 0, 1, 0).	bit(4o, 1, 1, 0).
+material(p4o, dirt).
+bit(p4o, 0, 0, 0).	bit(p4o, 1, 0, 0).
+bit(p4o, 0, 1, 0).	bit(p4o, 1, 1, 0).
 
 % - - -
-material(4s, dirt).
-bit(4s, 0, 0, 0).	bit(4s, 1, 0, 0).
-					bit(4s, 1, 1, 0).	bit(4s, 2, 1, 0).
+material(p4s, dirt).
+bit(p4s, 0, 0, 0).	bit(p4s, 1, 0, 0).
+					bit(p4s, 1, 1, 0).	bit(p4s, 2, 1, 0).
 
 % - - -
-material(4y, dirt).
-bit(4y, 0, 0, 0).	bit(4y, 1, 0, 0).
-					bit(4y, 1, 1, 0).
+material(p4y, dirt).
+bit(p4y, 0, 0, 0).	bit(p4y, 1, 0, 0).
+					bit(p4y, 1, 1, 0).
 
-bit(4y, 1, 0, 1).
-
-% - - -
-material(4q1, dirt).
-bit(4q1, 0, 0, 0).	bit(4q1, 1, 0, 0).
-					bit(4q1, 1, 1, 0).
-
-bit(4q1, 0, 0, 1).
+bit(p4y, 1, 0, 1).
 
 % - - -
-material(4q2, dirt).
-bit(4q2, 0, 0, 1).	bit(4q2, 1, 0, 1).
-					bit(4q2, 1, 1, 1).
+material(p4q1, dirt).
+bit(p4q1, 0, 0, 0).	bit(p4q1, 1, 0, 0).
+					bit(p4q1, 1, 1, 0).
 
-bit(4q2, 0, 0, 0).
+bit(p4q1, 0, 0, 1).
+
+% - - -
+material(p4q2, dirt).
+bit(p4q2, 0, 0, 1).	bit(p4q2, 1, 0, 1).
+					bit(p4q2, 1, 1, 1).
+
+bit(p4q2, 0, 0, 0).
 
 % 5 cubes
 % - - -
