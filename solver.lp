@@ -1,5 +1,5 @@
 % The tower
-width(4). depth(4). height(8). 
+width(4). depth(4). height(4). 
 
 cube(X, Y, Z) :- width(W), depth(D), height(H), X=0..W-1, Y=0..D-1, Z=0..H-1.
 
@@ -74,7 +74,6 @@ layer_weight(Z, W) :-
                material_weight(Mat, FW) }.
 
 % each layer must be heavier than the above one
-%:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
+:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
 
-#show selected_piece/1.
-#show layer_weight/2.
+#show occ/4.
