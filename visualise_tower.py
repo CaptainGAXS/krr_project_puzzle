@@ -18,21 +18,32 @@ def read_materials(db_path="pieces.db"):
     return materials
 
 def parse_clingo_input(text):
-    """Extrait tous les occ(P,X,Y,Z) d'une chaîne de texte."""
-    pattern = r'occ\(([^,]+),(\d+),(\d+),(\d+)\)'
-    matches = re.findall(pattern, text)
-    parsed = []
+    """Extrait tous les occ(P,X,Y,Z) et layer_weight(Z,W) d'une chaîne de texte."""
+    parsed_occ = []
+    weights = {}
+    
+    # Parse occ(...)
+    pattern_occ = r'occ\(([^,]+),(\d+),(\d+),(\d+)\)'
+    matches_occ = re.findall(pattern_occ, text)
     max_x, max_y, max_z = 0, 0, 0
-    for match in matches:
+    for match in matches_occ:
         piece = match[0]
         x, y, z = int(match[1]), int(match[2]), int(match[3])
         max_x = max(max_x, x)
         max_y = max(max_y, y)
         max_z = max(max_z, z)
-        parsed.append((piece, x, y, z))
-    return parsed, max_x + 1, max_y + 1, max_z + 1
+        parsed_occ.append((piece, x, y, z))
+        
+    # Parse layer_weight(...)
+    pattern_weight = r'layer_weight\((\d+),\s*(\d+)\)'
+    matches_weight = re.findall(pattern_weight, text)
+    for match in matches_weight:
+        z, w = int(match[0]), int(match[1])
+        weights[z] = w
+        
+    return parsed_occ, max_x + 1, max_y + 1, max_z + 1, weights
 
-def visualize(parsed_data, dimensions, materials):
+def visualize(parsed_data, dimensions, materials, weights):
     if not parsed_data:
         print("Aucune donnée occ(P,X,Y,Z) trouvée à visualiser.")
         return
@@ -91,6 +102,11 @@ def visualize(parsed_data, dimensions, materials):
         legend_handles.append(patch)
 
     ax.legend(handles=legend_handles, loc='center left', bbox_to_anchor=(1.05, 0.5), title="Pièces & Matériaux")
+    
+    if weights:
+        weight_text = "Poids par couche:\n" + "\n".join([f"Couche {z}: {w} kg" for z, w in sorted(weights.items())[::-1]])
+        fig.text(0.02, 0.5, weight_text, fontsize=10, va='center', bbox=dict(boxstyle="round,pad=0.5", facecolor="white", alpha=0.8))
+
     ax.set_xlabel('Largeur (X)')
     ax.set_ylabel('Profondeur (Y)')
     ax.set_zlabel('Hauteur (Z)')
@@ -112,7 +128,7 @@ if __name__ == "__main__":
 
     # Chargement
     materials = read_materials("pieces.db")
-    parsed_data, dim_x, dim_y, dim_z = parse_clingo_input(user_input)
+    parsed_data, dim_x, dim_y, dim_z, weights = parse_clingo_input(user_input)
     
     # Affichage
-    visualize(parsed_data, (dim_x, dim_y, dim_z), materials)
+    visualize(parsed_data, (dim_x, dim_y, dim_z), materials, weights)

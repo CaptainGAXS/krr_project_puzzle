@@ -65,10 +65,12 @@ border_faces(X, Y, N) :-
 % Calculate each layer weight
 layer(Z) :- height(H), Z = 0..H-1.
 
+layer_weight(Z, W) :- 
+    layer(Z), 
+    W = #sum { N*FW, P, X, Y : occ(P, X, Y, Z), border_faces(X,Y,N), material(P, Mat), material_weight(Mat, FW) }.
+
 % A layer Z must not have a strictly smaller weight than the layer ABOVE it (Z+1).
-:- layer(Z), layer(Z+1),
-   W1 = #sum { N*FW, P, X, Y : occ(P, X, Y, Z),   border_faces(X,Y,N), material(P, Mat), material_weight(Mat, FW) },
-   W2 = #sum { N*FW, P, X, Y : occ(P, X, Y, Z+1), border_faces(X,Y,N), material(P, Mat), material_weight(Mat, FW) },
-   W1 < W2.
+:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
 
 #show occ/4.
+#show layer_weight/2.
