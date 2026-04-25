@@ -55,25 +55,20 @@ occupied(X, Y, Z) :- occ(_, X, Y, Z).
 % The tower must be entirely filled (no hole)
 :- cube(X, Y, Z), not occupied(X, Y, Z).
 
-
-% Exposed if the neighbor cell is outside the tower
-exposed(P, X, Y, Z, DX, DY, DZ) :-
-    occ(P, X, Y, Z),
-    face_dir(DX, DY, DZ),
-    not cube(X+DX, Y+DY, Z+DZ).
+% Number of exposed lateral faces for each (X,Y) coordinate of the grid.
+% Since the tower is completely filled, only the outermost grid cells are exposed.
+border_faces(X, Y, N) :- 
+    cube(X, Y, 0), 
+    N = #count { DX, DY : face_dir(DX, DY, 0), not cube(X+DX, Y+DY, 0) },
+    N > 0.
 
 % Calculate each layer weight
 layer(Z) :- height(H), Z = 0..H-1.
 
-% Layer weight = sum of every exposed cube weight
-layer_weight(Z, W) :-
-    layer(Z),
-    W = #sum { FW, P, X, Y, DX, DY, DZ :
-               exposed(P, X, Y, Z, DX, DY, DZ),
-               material(P, Mat),
-               material_weight(Mat, FW) }.
-
-% each layer must be heavier than the above one
-:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
+% A layer Z must not have a strictly smaller weight than the layer ABOVE it (Z+1).
+:- layer(Z), layer(Z+1),
+   W1 = #sum { N*FW, P, X, Y : occ(P, X, Y, Z),   border_faces(X,Y,N), material(P, Mat), material_weight(Mat, FW) },
+   W2 = #sum { N*FW, P, X, Y : occ(P, X, Y, Z+1), border_faces(X,Y,N), material(P, Mat), material_weight(Mat, FW) },
+   W1 < W2.
 
 #show occ/4.
