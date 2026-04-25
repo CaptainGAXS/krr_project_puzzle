@@ -1,62 +1,66 @@
 % The tower
-width(8). depth(8). height(16). 
+width(4). depth(4). height(8). 
 
 cube(X, Y, Z) :- width(W), depth(D), height(H), X=0..W-1, Y=0..D-1, Z=0..H-1.
-
-% -------------------------------------------------
-% piece selection
-
-% guess which variant
-available_variant(P, V) :- p3(P, V, _, _, _).
-
-% For each pentomino, we choose one variant
-1 { selected_variant(P, V) : available_variant(P, V) } 1 :- piece(P).
 
 % -------------------------------------------------
 % selection of the pieces
 selected_piece(P) :- piece(P), not not_selected_piece(P).
 not_selected_piece(P) :- piece(P), not selected_piece(P).
 
+% list of available variants
+available_variant(P, V) :- p3(P, V, _, _, _).
+
+% -------------------------------------------------
+% number of cubes of each piece (volume)
+piece_volume(P, Vol) :- piece(P), Vol = #count { X, Y, Z : p3(P, 0, X, Y, Z) }.
+
+% the total volume of the selected pieces must be equal to the tower volume
+:- width(W), depth(D), height(H), #sum { Vol, P : selected_piece(P), piece_volume(P, Vol) } != W*D*H.
+
 % -------------------------------------------------
 % piece placement
 
-% guess the position of the origin of the piece
-1 { origin(P, X0, Y0, Z0) : cube(X0, Y0, Z0) } 1 :- selected_piece(P).
+% Invalid placement: a piece goes out of the boundaries of the tower
+invalid_placement(P, V, X, Y, Z) :- 
+    available_variant(P, V), cube(X, Y, Z), 
+    p3(P, V, DX, DY, DZ), not cube(X+DX, Y+DY, Z+DZ).
 
-% place the others cube of the piece
-occ(P, X0+X, Y0+Y, Z0+Z) :- 
-    origin(P, X0, Y0, Z0),
-    selected_variant(P, V),
-    p3(P, V, X, Y, Z).
+% Valid placement: it stays entirely inside the 4x4x8 grid
+valid_placement(P, V, X, Y, Z) :- 
+    available_variant(P, V), cube(X, Y, Z), 
+    not invalid_placement(P, V, X, Y, Z).
 
-% ensure inside the tower
-:- occ(P, X, Y, Z), not cube(X, Y, Z).
+% Single choice: pick exactly one valid placement (VARIANT + ORIGIN coupled) for each selected piece
+1 { placement(P, V, X, Y, Z) : valid_placement(P, V, X, Y, Z) } 1 :- selected_piece(P).
 
-% not overlapping
-:- occ(P1, X, Y, Z), occ(P2, X, Y, Z), P1 != P2.
+% place the cubes of the piece
+occ(P, X+DX, Y+DY, Z+DZ) :- 
+    placement(P, V, X, Y, Z),
+    p3(P, V, DX, DY, DZ).
+
+% not overlapping (P1 < P2 restricts symmetries logically)
+:- occ(P1, X, Y, Z), occ(P2, X, Y, Z), P1 < P2.
 
 
 % -------------------------------------------------
 
-% Define a weight for each material
-material_weight(iron,4).
-material_weight(stone, 3).
-material_weight(wood, 2).
-material_weight(dirt, 1).
-
-% 6 cubes directions
-face_dir( 1, 0, 0). face_dir(-1, 0, 0).
-face_dir( 0, 1, 0). face_dir( 0,-1, 0).
-face_dir( 0, 0, 1). face_dir( 0, 0,-1).
+% 4 lateral directions (ignore top and bottom)
+face_dir(1, 0, 0). face_dir(-1, 0, 0).
+face_dir(0, 1, 0). face_dir( 0,-1, 0).
 
 % Calculate the exposed faces
 occupied(X, Y, Z) :- occ(_, X, Y, Z).
 
-% Exposed if the neighbor cell is not occupied
+% The tower must be entirely filled (no hole)
+:- cube(X, Y, Z), not occupied(X, Y, Z).
+
+
+% Exposed if the neighbor cell is outside the tower
 exposed(P, X, Y, Z, DX, DY, DZ) :-
     occ(P, X, Y, Z),
     face_dir(DX, DY, DZ),
-    not occupied(X+DX, Y+DY, Z+DZ).
+    not cube(X+DX, Y+DY, Z+DZ).
 
 % Calculate each layer weight
 layer(Z) :- height(H), Z = 0..H-1.
@@ -70,9 +74,7 @@ layer_weight(Z, W) :-
                material_weight(Mat, FW) }.
 
 % each layer must be heavier than the above one
-:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
+%:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
 
 #show selected_piece/1.
-#show selected_variant/2.
-#show origin/4.
 #show layer_weight/2.

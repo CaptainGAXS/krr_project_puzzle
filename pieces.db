@@ -160,6 +160,23 @@ bit(n, 0, 1, 0).
 bit(n, 0, 2, 0).	bit(n, 1, 2, 0).
 					bit(n, 1, 3, 0).
 
+% - - -
+material(c3D1, iron).
+bit(c3D1, 1, 0, 0).
+bit(c3D1, 0, 1, 0). bit(c3D1, 1, 1, 0). bit(c3D1, 2, 1, 0).
+                    bit(c3D1, 1, 1, 1).
+
+material(z3D, wood).
+bit(z3D, 0, 0, 0). bit(z3D, 1, 0, 0).
+                   bit(z3D, 1, 1, 0). 
+                   bit(z3D, 1, 1, 1). bit(z3D, 2, 1, 1).
+
+material(l3D, dirt).
+bit(l3D, 0, 0, 0). bit(l3D, 1, 0, 0).
+bit(l3D, 0, 1, 0).
+bit(l3D, 0, 0, 1).
+bit(l3D, 0, 0, 2).
+
 % ----------------
 piece(P) :- bit(P, _, _, _).
 
@@ -176,3 +193,12 @@ p3(P, (3, SX, SY, SZ),  SX*Z, SY*X, SZ*Y) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= 
 p3(P, (4, SX, SY, SZ),  SX*X, SY*Z, SZ*Y) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
 p3(P, (5, SX, SY, SZ),  SX*Z, SY*Y, SZ*X) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
 p3(P, (6, SX, SY, SZ),  SX*Y, SY*X, SZ*Z) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
+
+
+
+% -----------------------
+% Define a weight for each material
+material_weight(iron,4).
+material_weight(stone, 3).
+material_weight(wood, 2).
+material_weight(dirt, 1).
