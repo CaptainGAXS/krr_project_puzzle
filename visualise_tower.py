@@ -62,22 +62,25 @@ def visualize(parsed_data, dimensions, materials, weights):
         material_groups.setdefault(mat, []).append(p)
 
     piece_colors = {}
-    # Palettes de couleurs (colormaps) par matériau
+    # Palettes de couleurs (colormaps) par matériau et plages de teintes (min, max)
     base_cmaps = {
-        'iron': 'Blues',    # Nuances de bleu
-        'stone': 'Greys',   # Nuances de gris (clair à foncé)
-        'wood': 'Oranges',  # Nuances de orange/brun
-        'dirt': 'Greens',   # Nuances de vert
-        'inconnu': 'Purples'# Violet par défaut
+        'iron': ('Greys', 0.3, 0.5),     # Gris classique
+        'stone': ('Greys', 0.6, 0.8),    # Gris foncé
+        'wood': ('YlOrBr', 0.6, 0.9),    # Marron
+        'dirt': ('Greys', 0.9, 1.0),     # Noir
+        'inconnu': ('Purples', 0.4, 0.9)
     }
     
     for mat, pieces in material_groups.items():
-        cmap_name = base_cmaps.get(mat.lower(), 'Purples')
+        cmap_info = base_cmaps.get(mat.lower(), ('Purples', 0.4, 0.9))
+        cmap_name, shade_min, shade_max = cmap_info
         cmap = plt.get_cmap(cmap_name)
         n_pieces = len(pieces)
         for i, p in enumerate(pieces):
-            # On prend des teintes entre 0.4 (déjà bien visible) et 0.9 (foncé)
-            shade = 0.6 if n_pieces == 1 else 0.4 + (0.5 * i / (n_pieces - 1))
+            if n_pieces == 1:
+                shade = (shade_min + shade_max) / 2
+            else:
+                shade = shade_min + (shade_max - shade_min) * (i / (n_pieces - 1))
             piece_colors[p] = cmap(shade)
 
     # Remplit la grille 3D
