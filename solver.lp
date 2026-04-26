@@ -1,5 +1,5 @@
 % The tower
-width(4). depth(4). height(4). 
+width(4). depth(4). height(8). 
 
 cube(X, Y, Z) :- width(W), depth(D), height(H), X=0..W-1, Y=0..D-1, Z=0..H-1.
 
@@ -51,9 +51,6 @@ face_dir(0, 1, 0). face_dir( 0,-1, 0).
 
 % Calculate the exposed faces
 occupied(X, Y, Z) :- occ(_, X, Y, Z).
-
-% The tower must be entirely filled (no hole)
-:- cube(X, Y, Z), not occupied(X, Y, Z).
 
 % Number of exposed lateral faces for each (X,Y) coordinate of the grid.
 % Since the tower is completely filled, only the outermost grid cells are exposed.
