@@ -1,5 +1,5 @@
 % The tower
-width(3). depth(3). height(3). 
+width(3). depth(3). height(n). 
 
 cube(X, Y, Z) :- width(W), depth(D), height(H), X=0..W-1, Y=0..D-1, Z=0..H-1.
 
