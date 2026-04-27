@@ -75,7 +75,7 @@ def afficher_pieces_3d(pieces, materials):
             
         # Affichage
         ax.voxels(voxels, edgecolor='black', facecolor=facecolor, alpha=0.9)
-        ax.set_title(f'Piece: {name} ({len(coords)} cubes)', fontsize=10, pad=0)
+        ax.set_title(f'Piece: {name}', fontsize=10, pad=0)
         
         # Cette ligne est la clé : elle force les proportions de la "boîte 3D" 
         # à correspondre exactement au nombre de cubes (size_x, size_y, size_z).

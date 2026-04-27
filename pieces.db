@@ -1,21 +1,6 @@
 % material(PIECE_NAME, MATERIAL)
 % bit(PIECE_NAME, X, Y, Z)
 % - - -
-material(1, iron).
-bit(1, 0, 0, 0).
-
-% - - -
-material(2, iron).
-bit(2, 0, 0, 0).	bit(2, 1, 0, 0).
-
-% - - -
-material(p3a, iron).
-bit(p3a, 0, 0, 0).	bit(p3a, 1, 0, 0).	bit(p3a, 2, 0, 0).
-
-% - - -
-material(p3b, iron).
-bit(p3b, 0, 0, 0).	bit(p3b, 1, 0, 0).
-bit(p3b, 0, 1, 0).
 
 % 4 cubes
 % - - -
@@ -63,119 +48,142 @@ bit(p4q2, 0, 0, 1).	bit(p4q2, 1, 0, 1).
 
 bit(p4q2, 0, 0, 0).
 
+% ---------------------------------------
 % 5 cubes
-% - - -
-material(t, wood).
-bit(t, 0, 0, 0).	bit(t, 1, 0, 0).	bit(t, 2, 0, 0).
-					bit(t, 1, 1, 0).
-					bit(t, 1, 2, 0).
+% ---------------------------------------
+material(p5t, wood).
+bit(p5t, 0, 0, 0).	bit(p5t, 1, 0, 0).	bit(p5t, 2, 0, 0).
+					bit(p5t, 1, 1, 0).
+					bit(p5t, 1, 2, 0).
 
-material(t3D1, wood).
-bit(t3D1, 0, 0, 0).	bit(t3D1, 1, 0, 0).	bit(t3D1, 2, 0, 0).
-					bit(t3D1, 1, 1, 0).
-					bit(t3D1, 1, 0, 1).
-
-
-% - - -
-material(u, wood).
-bit(u, 0, 0, 0).	bit(u, 1, 0, 0).	bit(u, 2, 0, 0).
-bit(u, 0, 1, 0).						bit(u, 2, 1, 0).
+material(p5t3D, wood).
+bit(p5t3D, 0, 0, 0).	bit(p5t3D, 1, 0, 0).	bit(p5t3D, 2, 0, 0).
+					bit(p5t3D, 1, 1, 0).
+					bit(p5t3D, 1, 0, 1).
 
 % - - -
-material(v, wood).
-bit(v, 0, 0, 0).	bit(v, 1, 0, 0).	bit(v, 2, 0, 0).
-bit(v, 0, 1, 0).
-bit(v, 0, 2, 0).
-
-material(v3D1, wood).
-bit(v3D1, 0, 0, 0).	bit(v3D1, 1, 0, 0).	bit(v3D1, 2, 0, 0).
-bit(v3D1, 0, 1, 0).
-bit(v3D1, 0, 1, 1).
+material(p5u, wood).
+bit(p5u, 0, 0, 0).	bit(p5u, 1, 0, 0).	bit(p5u, 2, 0, 0).
+bit(p5u, 0, 1, 0).						bit(p5u, 2, 1, 0).
 
 % - - -
-material(w, wood).
-bit(w, 0, 0, 0).
-bit(w, 0, 1, 0). bit(w, 1, 1, 0).
-				 bit(w, 1, 2, 0). bit(w, 2, 2, 0).
+material(p5v, wood).
+bit(p5v, 0, 0, 0).	bit(p5v, 1, 0, 0).	bit(p5v, 2, 0, 0).
+bit(p5v, 0, 1, 0).
+bit(p5v, 0, 2, 0).
+
+material(p5v3D, wood).
+bit(p5v3D, 0, 0, 0).	bit(p5v3D, 1, 0, 0).	bit(p5v3D, 2, 0, 0).
+bit(p5v3D, 0, 1, 0).
+bit(p5v3D, 0, 1, 1).
 
 % - - -
-material(x, wood).
-                 bit(x, 1, 0, 0).
-bit(x, 0, 1, 0). bit(x, 1, 1, 0). bit(x, 2, 1, 0).
-				 bit(x, 1, 2, 0).
+material(p5w, wood).
+bit(p5w, 0, 0, 0).
+bit(p5w, 0, 1, 0). bit(p5w, 1, 1, 0).
+				 bit(p5w, 1, 2, 0). bit(p5w, 2, 2, 0).
 
 % - - -
-material(y, wood).
-bit(y, 0, 0, 0).	bit(y, 1, 0, 0).	bit(y, 2, 0, 0). bit(y, 3, 0, 0).
-					bit(y, 1, 1, 0).
-
-material(y3D1, wood).
-bit(y3D1, 0, 0, 0).	bit(y3D1, 1, 0, 0).	bit(y3D1, 2, 0, 0). bit(y3D1, 2, 0, 1).
-					bit(y3D1, 1, 1, 0).
+material(p5x, wood).
+                 bit(p5x, 1, 0, 0).
+bit(p5x, 0, 1, 0). bit(p5x, 1, 1, 0). bit(p5x, 2, 1, 0).
+				 bit(p5x, 1, 2, 0).
 
 % - - -
-material(z, wood).
-bit(z, 0, 0, 0).	bit(z, 1, 0, 0).
-					bit(z, 1, 1, 0). 
-					bit(z, 1, 2, 0). bit(z, 2, 2, 0).
+material(p5y, wood).
+bit(p5y, 0, 0, 0).	bit(p5y, 1, 0, 0).	bit(p5y, 2, 0, 0). bit(p5y, 3, 0, 0).
+					bit(p5y, 1, 1, 0).
+
+material(p5y3D, wood).
+bit(p5y3D, 0, 0, 0).	bit(p5y3D, 1, 0, 0).	bit(p5y3D, 2, 0, 0). bit(p5y3D, 2, 0, 1).
+					bit(p5y3D, 1, 1, 0).
+
+% - - -
+material(p5z, wood).
+bit(p5z, 0, 0, 0).	bit(p5z, 1, 0, 0).
+					bit(p5z, 1, 1, 0). 
+					bit(p5z, 1, 2, 0). bit(p5z, 2, 2, 0).
+
+material(p5z3D, wood).
+bit(p5z3D, 0, 0, 0). bit(p5z3D, 1, 0, 0).
+                   bit(p5z3D, 1, 1, 0). 
+                   bit(p5z3D, 1, 1, 1). bit(p5z3D, 2, 1, 1).
 
 % - - - 
-material(f, stone).
-					bit(f, 1, 0, 0).	bit(f, 2, 0, 0).
-bit(f, 0, 1, 0).	bit(f, 1, 1, 0).
-					bit(f, 1, 2, 0).
+material(p5f, stone).
+					bit(p5f, 1, 0, 0).	bit(p5f, 2, 0, 0).
+bit(p5f, 0, 1, 0).	bit(p5f, 1, 1, 0).
+					bit(p5f, 1, 2, 0).
 
-material(f3D1, stone).
-					bit(f3D1, 1, 0, 0).	bit(f3D1, 2, 0, 0).
-bit(f3D1, 0, 1, 0).	bit(f3D1, 1, 1, 0).
-					bit(f3D1, 1, 1, 1).
-
-% - - -
-material(i, stone).
-bit(i, 0, 0, 0).
-bit(i, 0, 1, 0).
-bit(i, 0, 2, 0).
-bit(i, 0, 3, 0).
-bit(i, 0, 4, 0).
-
+material(p5f3D, stone).
+					bit(p5f3D, 1, 0, 0).	bit(p5f3D, 2, 0, 0).
+bit(p5f3D, 0, 1, 0).	bit(p5f3D, 1, 1, 0).
+					bit(p5f3D, 1, 1, 1).
 
 % - - -
-material(l, stone).
-bit(l, 0, 0, 0).	bit(l, 1, 0, 0).	bit(l, 2, 0, 0).	bit(l, 3, 0, 0).
-bit(l, 0, 1, 0).
+material(p5i, stone).
+bit(p5i, 0, 0, 0).
+bit(p5i, 0, 1, 0).
+bit(p5i, 0, 2, 0).
+bit(p5i, 0, 3, 0).
+bit(p5i, 0, 4, 0).
+
 
 % - - -
-material(p, stone).
-bit(p, 0, 0, 0).	bit(p, 1, 0, 0).	bit(p, 2, 0, 0).
-bit(p, 0, 1, 0).	bit(p, 1, 1, 0).
+material(p5l, stone).
+bit(p5l, 0, 0, 0).	bit(p5l, 1, 0, 0).	bit(p5l, 2, 0, 0).	bit(p5l, 3, 0, 0).
+bit(p5l, 0, 1, 0).
 
-material(p3D1, stone).
-bit(p3D1, 0, 0, 0).	bit(p3D1, 1, 0, 0).	bit(p3D1, 1, 0, 1).
-bit(p3D1, 0, 1, 0).	bit(p3D1, 1, 1, 0).
-
-% - - -
-material(n, stone).
-bit(n, 0, 0, 0).
-bit(n, 0, 1, 0).
-bit(n, 0, 2, 0).	bit(n, 1, 2, 0).
-					bit(n, 1, 3, 0).
+material(p5l3D, dirt).
+bit(p5l3D, 0, 0, 0). bit(p5l3D, 1, 0, 0).
+bit(p5l3D, 0, 1, 0).
+bit(p5l3D, 0, 0, 1).
+bit(p5l3D, 0, 0, 2).
 
 % - - -
-material(c3D1, iron).
-bit(c3D1, 1, 0, 0).
-bit(c3D1, 0, 1, 0). bit(c3D1, 1, 1, 0). bit(c3D1, 2, 1, 0).
-                    bit(c3D1, 1, 1, 1).
+material(p5p, stone).
+bit(p5p, 0, 0, 0).	bit(p5p, 1, 0, 0).	bit(p5p, 2, 0, 0).
+bit(p5p, 0, 1, 0).	bit(p5p, 1, 1, 0).
 
-material(z3D, wood).
-bit(z3D, 0, 0, 0). bit(z3D, 1, 0, 0).
-                   bit(z3D, 1, 1, 0). 
-                   bit(z3D, 1, 1, 1). bit(z3D, 2, 1, 1).
+material(p5p3D, stone).
+bit(p5p3D, 0, 0, 0).	bit(p5p3D, 1, 0, 0).	bit(p5p3D, 1, 0, 1).
+bit(p5p3D, 0, 1, 0).	bit(p5p3D, 1, 1, 0).
 
-material(l3D, dirt).
-bit(l3D, 0, 0, 0). bit(l3D, 1, 0, 0).
-bit(l3D, 0, 1, 0).
-bit(l3D, 0, 0, 1).
-bit(l3D, 0, 0, 2).
+% - - -
+material(p5n, stone).
+bit(p5n, 0, 0, 0).
+bit(p5n, 0, 1, 0).
+bit(p5n, 0, 2, 0).	bit(p5n, 1, 2, 0).
+					bit(p5n, 1, 3, 0).
+
+% - - -
+material(p5c3D, iron).
+					 bit(p5c3D, 1, 0, 0).
+bit(p5c3D, 0, 1, 0). bit(p5c3D, 1, 1, 0). bit(p5c3D, 2, 1, 0).
+                    bit(p5c3D, 1, 1, 1).
+
+material(p5c3D2, iron).
+					  bit(p5c3D2, 1, 0, 0).
+bit(p5c3D2, 0, 1, 0). bit(p5c3D2, 1, 1, 0). bit(p5c3D2, 2, 1, 0).
+                      bit(p5c3D2, 1, 0, 1).
+
+% - - -
+material(p5s3D, dirt).
+bit(p5s3D, 0, 0, 0).	bit(p5s3D, 1, 0, 0).
+						bit(p5s3D, 1, 1, 0).	bit(p5s3D, 2, 1, 0).
+						bit(p5s3D, 1, 0, 1).
+
+% - - -
+material(p5g3D, dirt).
+bit(p5g3D, 0, 0, 0). bit(p5g3D, 1, 0, 0).
+bit(p5g3D, 0, 1, 0).
+bit(p5g3D, 0, 2, 0).
+bit(p5g3D, 0, 1, 1).
+
+% - - -
+material(p5j3D, stone).
+bit(p5j3D, 0, 0, 0).	bit(p5j3D, 1, 0, 0).	bit(p5j3D, 1, 0, 1).
+bit(p5j3D, 0, 1, 0).	bit(p5j3D, 0, 1, 1).
 
 % ----------------
 piece(P) :- bit(P, _, _, _).
