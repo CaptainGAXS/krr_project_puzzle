@@ -185,46 +185,81 @@ material(p5j3D, stone).
 bit(p5j3D, 0, 0, 0).	bit(p5j3D, 1, 0, 0).	bit(p5j3D, 1, 0, 1).
 bit(p5j3D, 0, 1, 0).	bit(p5j3D, 0, 1, 1).
 
-% ----------------
+% ----------------------------------------------------
+% ----------------------------------------------------
+% ----------------------------------------------------
+
 piece(P) :- bit(P, _, _, _).
 
-% p3(Name, ID, X, Y, Z)
+% ----------------------------------------------------
 % base piece and variants generation
-raw_p3(P, 0, X, Y, Z) :- bit(P, X, Y, Z).
 
-% 3D even permutations (0 or 2 swaps)
-raw_p3(P, (1, SX, SY, SZ),  SX*X, SY*Y, SZ*Z) :- bit(P, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
-raw_p3(P, (2, SX, SY, SZ),  SX*Y, SY*Z, SZ*X) :- bit(P, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
-raw_p3(P, (3, SX, SY, SZ),  SX*Z, SY*X, SZ*Y) :- bit(P, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
+% The 24 possible rotations of a 3D-pieces
+% rot(ID, Permutation_X, Permutation_Y, Permutation_Z, SignX, SignY, SignZ)
+rot(1,1,2,3, 1,1,1).  rot(2,1,2,3, 1,-1,-1). rot(3,1,2,3, -1,1,-1). rot(4,1,2,3, -1,-1,1).
+rot(5,1,3,2, 1,1,-1). rot(6,1,3,2, 1,-1,1).  rot(7,1,3,2, -1,1,1).  rot(8,1,3,2, -1,-1,-1).
+rot(9,2,1,3, 1,1,-1). rot(10,2,1,3, 1,-1,1). rot(11,2,1,3, -1,1,1). rot(12,2,1,3, -1,-1,-1).
+rot(13,2,3,1, 1,1,1). rot(14,2,3,1, 1,-1,-1). rot(15,2,3,1, -1,1,-1). rot(16,2,3,1, -1,-1,1).
+rot(17,3,1,2, 1,1,1). rot(18,3,1,2, 1,-1,-1). rot(19,3,1,2, -1,1,-1). rot(20,3,1,2, -1,-1,1).
+rot(21,3,2,1, 1,1,-1). rot(22,3,2,1, 1,-1,1). rot(23,3,2,1, -1,1,1). rot(24,3,2,1, -1,-1,-1).
 
-% 3D odd permutations (1 swap)
-raw_p3(P, (4, SX, SY, SZ),  SX*X, SY*Z, SZ*Y) :- bit(P, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
-raw_p3(P, (5, SX, SY, SZ),  SX*Z, SY*Y, SZ*X) :- bit(P, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
-raw_p3(P, (6, SX, SY, SZ),  SX*Y, SY*X, SZ*Z) :- bit(P, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
+% Apply a rotation R to the bits of a piece P, with scaling by signs (SX, SY, SZ)
+apply_rot(P, R, SX*X, SY*Y, SZ*Z) :- bit(P, X, Y, Z), rot(R, 1, 2, 3, SX, SY, SZ).
+apply_rot(P, R, SX*X, SY*Z, SZ*Y) :- bit(P, X, Y, Z), rot(R, 1, 3, 2, SX, SY, SZ).
+apply_rot(P, R, SX*Y, SY*X, SZ*Z) :- bit(P, X, Y, Z), rot(R, 2, 1, 3, SX, SY, SZ).
+apply_rot(P, R, SX*Y, SY*Z, SZ*X) :- bit(P, X, Y, Z), rot(R, 2, 3, 1, SX, SY, SZ).
+apply_rot(P, R, SX*Z, SY*X, SZ*Y) :- bit(P, X, Y, Z), rot(R, 3, 1, 2, SX, SY, SZ).
+apply_rot(P, R, SX*Z, SY*Y, SZ*X) :- bit(P, X, Y, Z), rot(R, 3, 2, 1, SX, SY, SZ).
 
-variant(P, V) :- raw_p3(P, V, _, _, _).
+% Normalize the rotated piece by translating it so that its minimum coordinates are at the origin (0,0,0)
+min_coords(P, R, MX, MY, MZ) :- 
+    apply_rot(P, R, _, _, _),
+    MX = #min { X : apply_rot(P, R, X, _, _) },
+    MY = #min { Y : apply_rot(P, R, _, Y, _) },
+    MZ = #min { Z : apply_rot(P, R, _, _, Z) }.
 
-% Calculate bounds to normalize coordinates to 0 for each variant
-min_x(P, V, M) :- variant(P, V), M = #min { X : raw_p3(P, V, X, _, _) }.
-min_y(P, V, M) :- variant(P, V), M = #min { Y : raw_p3(P, V, _, Y, _) }.
-min_z(P, V, M) :- variant(P, V), M = #min { Z : raw_p3(P, V, _, _, Z) }.
+norm_bit(P, R, X-MX, Y-MY, Z-MZ) :- 
+    apply_rot(P, R, X, Y, Z), 
+    min_coords(P, R, MX, MY, MZ).
 
-norm_p3(P, V, X-MX, Y-MY, Z-MZ) :- raw_p3(P, V, X, Y, Z), min_x(P, V, MX), min_y(P, V, MY), min_z(P, V, MZ).
+% Keep only unique variants of each piece (remove duplicates)
+rot_id(R) :- rot(R, _, _, _, _, _, _).
 
-% Deduplicate identical variants
-diff(P, V1, V2) :- norm_p3(P, V1, X, Y, Z), not norm_p3(P, V2, X, Y, Z), variant(P, V2).
-same(P, V1, V2) :- variant(P, V1), variant(P, V2), not diff(P, V1, V2), not diff(P, V2, V1).
+valid_rot(P, R) :-
+    piece(P),
+    rot_id(R),
+    norm_bit(P, R, _, _, _).
 
-% Keep the smallest variant ID for identical shapes
-keep(P, V) :- variant(P, V), V = #min { V2 : same(P, V, V2) }.
+diff(P, R1, R2) :-
+    valid_rot(P, R1),
+    valid_rot(P, R2),
+    norm_bit(P, R1, X, Y, Z),
+    not norm_bit(P, R2, X, Y, Z).
 
-p3(P, V, X, Y, Z) :- norm_p3(P, V, X, Y, Z), keep(P, V).
+same_shape(P, R1, R2) :-
+    valid_rot(P, R1),
+    valid_rot(P, R2),
+    not diff(P, R1, R2),
+    not diff(P, R2, R1).
 
+smaller_equiv(P, R) :-
+    valid_rot(P, R),
+    valid_rot(P, R2),
+    R2 < R,
+    same_shape(P, R, R2).
 
+keep_rot(P, R) :-
+    valid_rot(P, R),
+    not smaller_equiv(P, R).
+
+% p3(PIECE, VARIANT, X, Y, Z)
+p3(P, R, X, Y, Z) :-
+    norm_bit(P, R, X, Y, Z),
+    keep_rot(P, R).
 
 % -----------------------
 % Define a weight for each material
-material_weight(iron,4).
-material_weight(stone, 3).
-material_weight(wood, 2).
+material_weight(iron, 1).
+material_weight(stone, 1).
+material_weight(wood, 1).
 material_weight(dirt, 1).

@@ -1,5 +1,5 @@
 % The tower
-width(3). depth(3). height(6). 
+width(3). depth(3). height(4). 
 
 cube(X, Y, Z) :- width(W), depth(D), height(H), X=0..W-1, Y=0..D-1, Z=0..H-1.
 
@@ -13,7 +13,7 @@ available_variant(P, V) :- p3(P, V, _, _, _).
 
 % -------------------------------------------------
 % number of cubes of each piece (volume)
-piece_volume(P, Vol) :- piece(P), Vol = #count { X, Y, Z : p3(P, 0, X, Y, Z) }.
+piece_volume(P, Vol) :- piece(P), Vol = #count { DX, DY, DZ : bit(P, DX, DY, DZ) }.
 
 % the total volume of the selected pieces must be equal to the tower volume
 :- width(W), depth(D), height(H), #sum { Vol, P : selected_piece(P), piece_volume(P, Vol) } != W*D*H.
