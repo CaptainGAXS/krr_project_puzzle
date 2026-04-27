@@ -115,16 +115,15 @@ def visualize(parsed_data, dimensions, materials, material_weights, weights):
         patch = mpatches.Patch(color=color, label=label)
         legend_handles.append(patch)
 
-    ax.legend(handles=legend_handles, loc='center left', bbox_to_anchor=(1.05, 0.5), title="Matériaux & Poids")
+    ax.legend(handles=legend_handles, loc='center left', bbox_to_anchor=(1.05, 0.5), title="Materials & Weights")
     
     if weights:
-        weight_text = "Poids par couche:\n" + "\n".join([f"Couche {z}: {w} kg" for z, w in sorted(weights.items())[::-1]])
+        weight_text = "Layer weights:\n" + "\n".join([f"Layer {z}: {w} kg" for z, w in sorted(weights.items())[::-1]])
         fig.text(0.02, 0.5, weight_text, fontsize=10, va='center', bbox=dict(boxstyle="round,pad=0.5", facecolor="white", alpha=0.8))
 
-    ax.set_xlabel('Largeur (X)')
-    ax.set_ylabel('Profondeur (Y)')
-    ax.set_zlabel('Hauteur (Z)')
-    ax.set_title('Visualisation de la Tour 3D')
+    # Masquer le quadrillage et les axes
+    ax.set_axis_off()
+    ax.set_title('3D Tower Visualization')
     
     # Ajustement de l'affichage pour montrer la bonne échelle
     ax.set_box_aspect([max_x, max_y, max_z])
