@@ -66,8 +66,8 @@ layer_weight(Z, W) :-
     layer(Z), 
     W = #sum { N*FW, P, X, Y : occ(P, X, Y, Z), border_faces(X,Y,N), material(P, Mat), material_weight(Mat, FW) }.
 
-% A layer Z must not have a strictly smaller weight than the layer ABOVE it (Z+1).
-:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
+% A layer Z must not have a strictly higher weight than the layer ABOVE it (Z+1) (y-axis down).
+:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 > W2.
 
 #show occ/4.
 #show layer_weight/2.

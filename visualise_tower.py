@@ -4,8 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def read_materials(db_path="pieces.db"):
-    """Lit le fichier pieces.db pour extraire les matériaux associés aux pièces."""
+    """Lit le fichier pieces.db pour extraire les matériaux associés aux pièces et leurs poids."""
     materials = {}
+    material_weights = {}
     try:
         with open(db_path, "r", encoding="utf-8") as f:
             content = f.read()
@@ -13,9 +14,13 @@ def read_materials(db_path="pieces.db"):
             matches = re.findall(r'material\(([^,]+),\s*([^)]+)\)\.', content)
             for piece, mat in matches:
                 materials[piece.strip()] = mat.strip()
+            # Cherche material_weight(materiel, poids).
+            weight_matches = re.findall(r'material_weight\(([^,]+),\s*(\d+)\)\.', content)
+            for mat, weight in weight_matches:
+                material_weights[mat.strip()] = int(weight)
     except FileNotFoundError:
         print(f"Attention : {db_path} introuvable.")
-    return materials
+    return materials, material_weights
 
 def parse_clingo_input(text):
     """Extrait tous les occ(P,X,Y,Z) et layer_weight(Z,W) d'une chaîne de texte."""
@@ -43,7 +48,7 @@ def parse_clingo_input(text):
         
     return parsed_occ, max_x + 1, max_y + 1, max_z + 1, weights
 
-def visualize(parsed_data, dimensions, materials, weights):
+def visualize(parsed_data, dimensions, materials, material_weights, weights):
     if not parsed_data:
         print("Aucune donnée occ(P,X,Y,Z) trouvée à visualiser.")
         return
@@ -94,17 +99,23 @@ def visualize(parsed_data, dimensions, materials, weights):
     # Affiche les voxels
     ax.voxels(filled, facecolors=colors, edgecolors='k', linewidth=0.5)
 
-    # Légende avec les pièces et leur matériaux
+    # Légende avec les matériaux et leur poids
     import matplotlib.patches as mpatches
     legend_handles = []
-    for piece in unique_pieces:
-        color = piece_colors[piece]
-        mat = materials.get(piece, "inconnu")
-        label = f"Pièce: {piece} ({mat})"
+    
+    # On ajoute chaque matériau trouvé dans la tour à la légende
+    for mat in sorted(material_groups.keys()):
+        cmap_info = base_cmaps.get(mat.lower(), ('Purples', 0.4, 0.9))
+        cmap_name, shade_min, shade_max = cmap_info
+        cmap = plt.get_cmap(cmap_name)
+        # On utilise une nuance moyenne pour représenter le matériau
+        color = cmap((shade_min + shade_max) / 2)
+        weight = material_weights.get(mat, "?")
+        label = f"{mat.capitalize()} ({weight} kg/face)"
         patch = mpatches.Patch(color=color, label=label)
         legend_handles.append(patch)
 
-    ax.legend(handles=legend_handles, loc='center left', bbox_to_anchor=(1.05, 0.5), title="Pièces & Matériaux")
+    ax.legend(handles=legend_handles, loc='center left', bbox_to_anchor=(1.05, 0.5), title="Matériaux & Poids")
     
     if weights:
         weight_text = "Poids par couche:\n" + "\n".join([f"Couche {z}: {w} kg" for z, w in sorted(weights.items())[::-1]])
@@ -130,8 +141,8 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # Chargement
-    materials = read_materials("pieces.db")
+    materials, material_weights = read_materials("pieces.db")
     parsed_data, dim_x, dim_y, dim_z, weights = parse_clingo_input(user_input)
     
     # Affichage
-    visualize(parsed_data, (dim_x, dim_y, dim_z), materials, weights)
+    visualize(parsed_data, (dim_x, dim_y, dim_z), materials, material_weights, weights)
