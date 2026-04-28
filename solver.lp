@@ -1,6 +1,9 @@
 % -------------------------------------------------
 % Piece placement
 
+% list of available variants
+available_variant(P, V) :- selected_piece(P), p3(P, V, _, _, _).
+
 % Invalid placement: a piece goes out of the boundaries of the tower
 invalid_placement(P, V, X, Y, Z) :- 
     available_variant(P, V), cube(X, Y, Z), 
@@ -44,18 +47,16 @@ face_dir(0, 1, 0). face_dir( 0,-1, 0).
 occupied(X, Y, Z) :- occ(_, X, Y, Z).
 
 % Number of exposed lateral faces for each (X,Y) coordinate of the grid.
-% Since the tower is completely filled, only the outermost grid cells are exposed.
-border_faces(X, Y, N) :- 
-    cube(X, Y, 0), 
-    N = #count { DX, DY : face_dir(DX, DY, 0), not cube(X+DX, Y+DY, 0) },
-    N > 0.
+exposed(0,0,2). exposed(0,1,1). exposed(0,2,2).
+exposed(1,0,1). exposed(1,1,0). exposed(1,2,1).
+exposed(2,0,2). exposed(2,1,1). exposed(2,2,2).
 
 % Calculate each layer weight
 layer(Z) :- height(H), Z = 0..H-1.
 
 layer_weight(Z, W) :- 
     layer(Z), 
-    W = #sum { N*FW, P, X, Y : occ(P, X, Y, Z), border_faces(X,Y,N), material(P, Mat), material_weight(Mat, FW) }.
+    W = #sum { N*FW, P, X, Y : occ(P, X, Y, Z), exposed(X,Y,N), material(P, Mat), material_weight(Mat, FW) }.
 
 % Each layer must have a strictly higher weight than the layer above it (W(Z) > W(Z+1))
 :- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
