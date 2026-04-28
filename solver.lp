@@ -5,15 +5,15 @@ cube(X, Y, Z) :- width(W), depth(D), height(H), X=0..W-1, Y=0..D-1, Z=0..H-1.
 
 % -------------------------------------------------
 % selection of the pieces
-selected_piece(P) :- piece(P), not not_selected_piece(P).
-not_selected_piece(P) :- piece(P), not selected_piece(P).
+selected_piece(P) :- piece_used(P), not not_selected_piece(P).
+not_selected_piece(P) :- piece_used(P), not selected_piece(P).
 
 % list of available variants
 available_variant(P, V) :- p3(P, V, _, _, _).
 
 % -------------------------------------------------
 % number of cubes of each piece (volume)
-piece_volume(P, Vol) :- piece(P), Vol = #count { DX, DY, DZ : bit(P, DX, DY, DZ) }.
+piece_volume(P, Vol) :- piece_used(P), Vol = #count { DX, DY, DZ : bit(P, DX, DY, DZ) }.
 
 % the total volume of the selected pieces must be equal to the tower volume
 :- width(W), depth(D), height(H), #sum { Vol, P : selected_piece(P), piece_volume(P, Vol) } != W*D*H.
@@ -42,7 +42,6 @@ occ(P, X+DX, Y+DY, Z+DZ) :-
 % not overlapping (P1 < P2 restricts symmetries logically)
 :- occ(P1, X, Y, Z), occ(P2, X, Y, Z), P1 < P2.
 
-
 % -------------------------------------------------
 
 % 4 lateral directions (ignore top and bottom)
@@ -68,6 +67,20 @@ layer_weight(Z, W) :-
 
 % A layer Z must not have a strictly higher weight than the layer ABOVE it (Z+1) (y-axis down).
 :- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 > W2.
+
+% -------------------------------------------------
+% SYMMETRY BREAKING
+% -------------------------------------------------
+% Identify the first placed piece by its ID
+first_piece(MinP) :- MinP = #min { P : selected_piece(P) }.
+
+% Break X-axis and Y-axis reflections & rotations on the 3x3 base
+% We limit the X origin parameter to at most 1 (width/2)
+:- first_piece(P), placement(P, _, X, _, _), X > 1.
+
+% We limit the Y origin to be <= X to break diagonal reflection symmetry
+:- first_piece(P), placement(P, _, X, Y, _), Y > X.
+
 
 #show occ/4.
 #show layer_weight/2.
