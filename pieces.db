@@ -1,178 +1,309 @@
 % material(PIECE_NAME, MATERIAL)
 % bit(PIECE_NAME, X, Y, Z)
 % - - -
-material(1, iron).
-bit(1, 0, 0, 0).
-
-% - - -
-material(2, iron).
-bit(2, 0, 0, 0).	bit(2, 1, 0, 0).
-
-% - - -
-material(3a, iron).
-bit(3a, 0, 0, 0).	bit(3a, 1, 0, 0).	bit(3a, 2, 0, 0).
-
-% - - -
-material(3b, iron).
-bit(3b, 0, 0, 0).	bit(3b, 1, 0, 0).
-bit(3b, 0, 1, 0).
 
 % 4 cubes
 % - - -
-material(4i, dirt).
-bit(4i, 0, 0, 0).	bit(4i, 1, 0, 0).	bit(4i, 2, 0, 0).	bit(4i, 3, 0, 0).
+
+material(p4q2, dirt).
+associated_n(p4q2, 1).
+bit(p4q2, 0, 0, 1).	bit(p4q2, 1, 0, 1).
+					bit(p4q2, 1, 1, 1).
+
+bit(p4q2, 0, 0, 0).
+% - - -
+
+material(p4y, dirt).
+associated_n(p4y, 2).
+bit(p4y, 0, 0, 0).	bit(p4y, 1, 0, 0).
+					bit(p4y, 1, 1, 0).
+
+bit(p4y, 1, 0, 1).
 
 % - - -
-material(4l, dirt).
-bit(4l, 0, 0, 0).	bit(4l, 1, 0, 0).	bit(4l, 2, 0, 0).
-bit(4l, 0, 1, 0).
+material(p4t, dirt).
+associated_n(p4t, 3).
+bit(p4t, 0, 0, 0).	bit(p4t, 1, 0, 0).	bit(p4t, 2, 0, 0).
+					bit(p4t, 1, 1, 0).
 
 % - - -
-material(4t, dirt).
-bit(4t, 0, 0, 0).	bit(4t, 1, 0, 0).	bit(4t, 2, 0, 0).
-					bit(4t, 1, 1, 0).
+material(p4o, dirt).
+associated_n(p4o, 4).
+bit(p4o, 0, 0, 0).	bit(p4o, 1, 0, 0).
+bit(p4o, 0, 1, 0).	bit(p4o, 1, 1, 0).
 
 % - - -
-material(4o, dirt).
-bit(4o, 0, 0, 0).	bit(4o, 1, 0, 0).
-bit(4o, 0, 1, 0).	bit(4o, 1, 1, 0).
+material(p4s, dirt).
+associated_n(p4s, 5).
+bit(p4s, 0, 0, 0).	bit(p4s, 1, 0, 0).
+					bit(p4s, 1, 1, 0).	bit(p4s, 2, 1, 0).
 
 % - - -
-material(4s, dirt).
-bit(4s, 0, 0, 0).	bit(4s, 1, 0, 0).
-					bit(4s, 1, 1, 0).	bit(4s, 2, 1, 0).
+material(p4l, dirt).
+associated_n(p4l, 6).
+bit(p4l, 0, 0, 0).	bit(p4l, 1, 0, 0).	bit(p4l, 2, 0, 0).
+bit(p4l, 0, 1, 0).
 
 % - - -
-material(4y, dirt).
-bit(4y, 0, 0, 0).	bit(4y, 1, 0, 0).
-					bit(4y, 1, 1, 0).
+material(p4q1, dirt).
+associated_n(p4q1, 7).
+bit(p4q1, 0, 0, 0).	bit(p4q1, 1, 0, 0).
+					bit(p4q1, 1, 1, 0).
 
-bit(4y, 1, 0, 1).
-
-% - - -
-material(4q1, dirt).
-bit(4q1, 0, 0, 0).	bit(4q1, 1, 0, 0).
-					bit(4q1, 1, 1, 0).
-
-bit(4q1, 0, 0, 1).
+bit(p4q1, 0, 0, 1).
 
 % - - -
-material(4q2, dirt).
-bit(4q2, 0, 0, 1).	bit(4q2, 1, 0, 1).
-					bit(4q2, 1, 1, 1).
+material(p4i, dirt).
+associated_n(p4i, 8).
+bit(p4i, 0, 0, 0).	bit(p4i, 1, 0, 0).	bit(p4i, 2, 0, 0).	bit(p4i, 3, 0, 0).
 
-bit(4q2, 0, 0, 0).
-
+% ---------------------------------------
 % 5 cubes
+% ---------------------------------------
+#const r = 9. % for the moment, for the pieces if n >= 9
+material(p5v, wood).
+associated_n(p5v, 1).
+bit(p5v, 0, 0, 0).	bit(p5v, 1, 0, 0).	bit(p5v, 2, 0, 0).
+bit(p5v, 0, 1, 0).
+bit(p5v, 0, 2, 0).
+
+material(p5v3D, wood).
+associated_n(p5v3D, 4).
+bit(p5v3D, 0, 0, 0).	bit(p5v3D, 1, 0, 0).	bit(p5v3D, 2, 0, 0).
+bit(p5v3D, 0, 1, 0).
+bit(p5v3D, 0, 1, 1).
 % - - -
-material(t, wood).
-bit(t, 0, 0, 0).	bit(t, 1, 0, 0).	bit(t, 2, 0, 0).
-					bit(t, 1, 1, 0).
-					bit(t, 1, 2, 0).
-
-material(t3D1, wood).
-bit(t3D1, 0, 0, 0).	bit(t3D1, 1, 0, 0).	bit(t3D1, 2, 0, 0).
-					bit(t3D1, 1, 1, 0).
-					bit(t3D1, 1, 0, 1).
-
-
-% - - -
-material(u, wood).
-bit(u, 0, 0, 0).	bit(u, 1, 0, 0).	bit(u, 2, 0, 0).
-bit(u, 0, 1, 0).						bit(u, 2, 1, 0).
-
-% - - -
-material(v, wood).
-bit(v, 0, 0, 0).	bit(v, 1, 0, 0).	bit(v, 2, 0, 0).
-bit(v, 0, 1, 0).
-bit(v, 0, 2, 0).
-
-material(v3D1, wood).
-bit(v3D1, 0, 0, 0).	bit(v3D1, 1, 0, 0).	bit(v3D1, 2, 0, 0).
-bit(v3D1, 0, 1, 0).
-bit(v3D1, 0, 1, 1).
+material(p5u, wood).
+associated_n(p5u, 2).
+bit(p5u, 0, 0, 0).	bit(p5u, 1, 0, 0).	bit(p5u, 2, 0, 0).
+bit(p5u, 0, 1, 0).						bit(p5u, 2, 1, 0).
 
 % - - -
-material(w, wood).
-bit(w, 0, 0, 0).
-bit(w, 0, 1, 0). bit(w, 1, 1, 0).
-				 bit(w, 1, 2, 0). bit(w, 2, 2, 0).
+material(p5t, wood).
+associated_n(p5t, 5).
+bit(p5t, 0, 0, 0).	bit(p5t, 1, 0, 0).	bit(p5t, 2, 0, 0).
+					bit(p5t, 1, 1, 0).
+					bit(p5t, 1, 2, 0).
+
+material(p5t3D, wood).
+associated_n(p5t3D, 6).
+bit(p5t3D, 0, 0, 0).	bit(p5t3D, 1, 0, 0).	bit(p5t3D, 2, 0, 0).
+					bit(p5t3D, 1, 1, 0).
+					bit(p5t3D, 1, 0, 1).
 
 % - - -
-material(x, wood).
-                 bit(x, 1, 0, 0).
-bit(x, 0, 1, 0). bit(x, 1, 1, 0). bit(x, 2, 1, 0).
-				 bit(x, 1, 2, 0).
+material(p5w, wood).
+associated_n(p5w, 7).
+bit(p5w, 0, 0, 0).
+bit(p5w, 0, 1, 0). bit(p5w, 1, 1, 0).
+				 bit(p5w, 1, 2, 0). bit(p5w, 2, 2, 0).
 
 % - - -
-material(y, wood).
-bit(y, 0, 0, 0).	bit(y, 1, 0, 0).	bit(y, 2, 0, 0). bit(y, 3, 0, 0).
-					bit(y, 1, 1, 0).
-
-material(y3D1, wood).
-bit(y3D1, 0, 0, 0).	bit(y3D1, 1, 0, 0).	bit(y3D1, 2, 0, 0). bit(y3D1, 2, 0, 1).
-					bit(y3D1, 1, 1, 0).
+material(p5x, wood).
+associated_n(p5x, 8).
+                 bit(p5x, 1, 0, 0).
+bit(p5x, 0, 1, 0). bit(p5x, 1, 1, 0). bit(p5x, 2, 1, 0).
+				 bit(p5x, 1, 2, 0).
 
 % - - -
-material(z, wood).
-bit(z, 0, 0, 0).	bit(z, 1, 0, 0).
-					bit(z, 1, 1, 0). 
-					bit(z, 1, 2, 0). bit(z, 2, 2, 0).
+material(p5y, wood).
+associated_n(p5y, r).
+bit(p5y, 0, 0, 0).	bit(p5y, 1, 0, 0).	bit(p5y, 2, 0, 0). bit(p5y, 3, 0, 0).
+					bit(p5y, 1, 1, 0).
 
+material(p5y3D, wood).
+associated_n(p5y3D, r).
+bit(p5y3D, 0, 0, 0).	bit(p5y3D, 1, 0, 0).	bit(p5y3D, 2, 0, 0). bit(p5y3D, 2, 0, 1).
+					bit(p5y3D, 1, 1, 0).
+
+% - - -
+
+material(p5f, stone).
+associated_n(p5f, r).
+					bit(p5f, 1, 0, 0).	bit(p5f, 2, 0, 0).
+bit(p5f, 0, 1, 0).	bit(p5f, 1, 1, 0).
+					bit(p5f, 1, 2, 0).
+
+material(p5f3D, stone).
+associated_n(p5f3D, 3).
+					bit(p5f3D, 1, 0, 0).	bit(p5f3D, 2, 0, 0).
+bit(p5f3D, 0, 1, 0).	bit(p5f3D, 1, 1, 0).
+					bit(p5f3D, 1, 1, 1).
 % - - - 
-material(f, stone).
-					bit(f, 1, 0, 0).	bit(f, 2, 0, 0).
-bit(f, 0, 1, 0).	bit(f, 1, 1, 0).
-					bit(f, 1, 2, 0).
+material(p5z, wood).
+associated_n(p5z, r).
+bit(p5z, 0, 0, 0).	bit(p5z, 1, 0, 0).
+					bit(p5z, 1, 1, 0). 
+					bit(p5z, 1, 2, 0). bit(p5z, 2, 2, 0).
 
-material(f3D1, stone).
-					bit(f3D1, 1, 0, 0).	bit(f3D1, 2, 0, 0).
-bit(f3D1, 0, 1, 0).	bit(f3D1, 1, 1, 0).
-					bit(f3D1, 1, 1, 1).
-
-% - - -
-material(i, stone).
-bit(i, 0, 0, 0).
-bit(i, 0, 1, 0).
-bit(i, 0, 2, 0).
-bit(i, 0, 3, 0).
-bit(i, 0, 4, 0).
-
+material(p5z3D, wood).
+associated_n(p5z3D, r).
+bit(p5z3D, 0, 0, 0). bit(p5z3D, 1, 0, 0).
+                   bit(p5z3D, 1, 1, 0). 
+                   bit(p5z3D, 1, 1, 1). bit(p5z3D, 2, 1, 1).
 
 % - - -
-material(l, stone).
-bit(l, 0, 0, 0).	bit(l, 1, 0, 0).	bit(l, 2, 0, 0).	bit(l, 3, 0, 0).
-bit(l, 0, 1, 0).
+material(p5i, stone).
+associated_n(p5i, r).
+bit(p5i, 0, 0, 0).
+bit(p5i, 0, 1, 0).
+bit(p5i, 0, 2, 0).
+bit(p5i, 0, 3, 0).
+bit(p5i, 0, 4, 0).
+
 
 % - - -
-material(p, stone).
-bit(p, 0, 0, 0).	bit(p, 1, 0, 0).	bit(p, 2, 0, 0).
-bit(p, 0, 1, 0).	bit(p, 1, 1, 0).
+material(p5l, stone).
+associated_n(p5l, r).
+bit(p5l, 0, 0, 0).	bit(p5l, 1, 0, 0).	bit(p5l, 2, 0, 0).	bit(p5l, 3, 0, 0).
+bit(p5l, 0, 1, 0).
 
-material(p3D1, stone).
-bit(p3D1, 0, 0, 0).	bit(p3D1, 1, 0, 0).	bit(p3D1, 1, 0, 1).
-bit(p3D1, 0, 1, 0).	bit(p3D1, 1, 1, 0).
+material(p5l3D, dirt).
+associated_n(p5l3D, r).
+bit(p5l3D, 0, 0, 0). bit(p5l3D, 1, 0, 0).
+bit(p5l3D, 0, 1, 0).
+bit(p5l3D, 0, 0, 1).
+bit(p5l3D, 0, 0, 2).
 
 % - - -
-material(n, stone).
-bit(n, 0, 0, 0).
-bit(n, 0, 1, 0).
-bit(n, 0, 2, 0).	bit(n, 1, 2, 0).
-					bit(n, 1, 3, 0).
+material(p5p, stone).
+associated_n(p5p, r).
+bit(p5p, 0, 0, 0).	bit(p5p, 1, 0, 0).	bit(p5p, 2, 0, 0).
+bit(p5p, 0, 1, 0).	bit(p5p, 1, 1, 0).
 
-% ----------------
+material(p5p3D, stone).
+associated_n(p5p3D, r).
+bit(p5p3D, 0, 0, 0).	bit(p5p3D, 1, 0, 0).	bit(p5p3D, 1, 0, 1).
+bit(p5p3D, 0, 1, 0).	bit(p5p3D, 1, 1, 0).
+
+% - - -
+material(p5n, stone).
+associated_n(p5n, r).
+bit(p5n, 0, 0, 0).
+bit(p5n, 0, 1, 0).
+bit(p5n, 0, 2, 0).	bit(p5n, 1, 2, 0).
+					bit(p5n, 1, 3, 0).
+
+% - - -
+material(p5c3D, iron).
+associated_n(p5c3D, r).
+					 bit(p5c3D, 1, 0, 0).
+bit(p5c3D, 0, 1, 0). bit(p5c3D, 1, 1, 0). bit(p5c3D, 2, 1, 0).
+                    bit(p5c3D, 1, 1, 1).
+
+material(p5c3D2, iron).
+associated_n(p5c3D2, r).
+					  bit(p5c3D2, 1, 0, 0).
+bit(p5c3D2, 0, 1, 0). bit(p5c3D2, 1, 1, 0). bit(p5c3D2, 2, 1, 0).
+                      bit(p5c3D2, 1, 0, 1).
+
+% - - -
+material(p5s3D, dirt).
+associated_n(p5s3D, r).
+bit(p5s3D, 0, 0, 0).	bit(p5s3D, 1, 0, 0).
+						bit(p5s3D, 1, 1, 0).	bit(p5s3D, 2, 1, 0).
+						bit(p5s3D, 1, 0, 1).
+
+% - - -
+material(p5g3D, dirt).
+associated_n(p5g3D, r).
+bit(p5g3D, 0, 0, 0). bit(p5g3D, 1, 0, 0).
+bit(p5g3D, 0, 1, 0).
+bit(p5g3D, 0, 2, 0).
+bit(p5g3D, 0, 1, 1).
+
+% - - -
+material(p5j3D, stone).
+associated_n(p5j3D, r).
+bit(p5j3D, 0, 0, 0).	bit(p5j3D, 1, 0, 0).	bit(p5j3D, 1, 0, 1).
+bit(p5j3D, 0, 1, 0).	bit(p5j3D, 0, 1, 1).
+
+% ----------------------------------------------------
+% ----------------------------------------------------
+% ----------------------------------------------------
+
 piece(P) :- bit(P, _, _, _).
 
-% p3(Name, ID, X, Y, Z)
-% base piece
-p3(P, 0, X, Y, Z) :- bit(P, X, Y, Z).
+% ----------------------------------------------------
+% base piece and variants generation
 
-% 3D even permutations (0 or 2 swaps)
-p3(P, (1, SX, SY, SZ),  SX*X, SY*Y, SZ*Z) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
-p3(P, (2, SX, SY, SZ),  SX*Y, SY*Z, SZ*X) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
-p3(P, (3, SX, SY, SZ),  SX*Z, SY*X, SZ*Y) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ ==  1.
+% The 24 possible rotations of a 3D-pieces
+% rot(ID, Permutation_X, Permutation_Y, Permutation_Z, SignX, SignY, SignZ)
+rot(1,1,2,3, 1,1,1).  rot(2,1,2,3, 1,-1,-1). rot(3,1,2,3, -1,1,-1). rot(4,1,2,3, -1,-1,1).
+rot(5,1,3,2, 1,1,-1). rot(6,1,3,2, 1,-1,1).  rot(7,1,3,2, -1,1,1).  rot(8,1,3,2, -1,-1,-1).
+rot(9,2,1,3, 1,1,-1). rot(10,2,1,3, 1,-1,1). rot(11,2,1,3, -1,1,1). rot(12,2,1,3, -1,-1,-1).
+rot(13,2,3,1, 1,1,1). rot(14,2,3,1, 1,-1,-1). rot(15,2,3,1, -1,1,-1). rot(16,2,3,1, -1,-1,1).
+rot(17,3,1,2, 1,1,1). rot(18,3,1,2, 1,-1,-1). rot(19,3,1,2, -1,1,-1). rot(20,3,1,2, -1,-1,1).
+rot(21,3,2,1, 1,1,-1). rot(22,3,2,1, 1,-1,1). rot(23,3,2,1, -1,1,1). rot(24,3,2,1, -1,-1,-1).
 
-% 3D odd permutations (1 swap)
-p3(P, (4, SX, SY, SZ),  SX*X, SY*Z, SZ*Y) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
-p3(P, (5, SX, SY, SZ),  SX*Z, SY*Y, SZ*X) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
-p3(P, (6, SX, SY, SZ),  SX*Y, SY*X, SZ*Z) :- p3(P, 0, X, Y, Z), SX= (1;-1), SY= (1;-1), SZ= (1;-1), SX*SY*SZ == -1.
+% Apply a rotation R to the bits of a piece P, with scaling by signs (SX, SY, SZ)
+apply_rot(P, R, SX*X, SY*Y, SZ*Z) :- bit(P, X, Y, Z), rot(R, 1, 2, 3, SX, SY, SZ).
+apply_rot(P, R, SX*X, SY*Z, SZ*Y) :- bit(P, X, Y, Z), rot(R, 1, 3, 2, SX, SY, SZ).
+apply_rot(P, R, SX*Y, SY*X, SZ*Z) :- bit(P, X, Y, Z), rot(R, 2, 1, 3, SX, SY, SZ).
+apply_rot(P, R, SX*Y, SY*Z, SZ*X) :- bit(P, X, Y, Z), rot(R, 2, 3, 1, SX, SY, SZ).
+apply_rot(P, R, SX*Z, SY*X, SZ*Y) :- bit(P, X, Y, Z), rot(R, 3, 1, 2, SX, SY, SZ).
+apply_rot(P, R, SX*Z, SY*Y, SZ*X) :- bit(P, X, Y, Z), rot(R, 3, 2, 1, SX, SY, SZ).
+
+% Normalize the rotated piece by translating it so that its minimum coordinates are at the origin (0,0,0)
+min_coords(P, R, MX, MY, MZ) :- 
+    apply_rot(P, R, _, _, _),
+    MX = #min { X : apply_rot(P, R, X, _, _) },
+    MY = #min { Y : apply_rot(P, R, _, Y, _) },
+    MZ = #min { Z : apply_rot(P, R, _, _, Z) }.
+
+norm_bit(P, R, X-MX, Y-MY, Z-MZ) :- 
+    apply_rot(P, R, X, Y, Z), 
+    min_coords(P, R, MX, MY, MZ).
+
+% Keep only unique variants of each piece (remove duplicates)
+rot_id(R) :- rot(R, _, _, _, _, _, _).
+
+valid_rot(P, R) :-
+    piece(P),
+    rot_id(R),
+    norm_bit(P, R, _, _, _).
+
+diff(P, R1, R2) :-
+    valid_rot(P, R1),
+    valid_rot(P, R2),
+    norm_bit(P, R1, X, Y, Z),
+    not norm_bit(P, R2, X, Y, Z).
+
+same_shape(P, R1, R2) :-
+    valid_rot(P, R1),
+    valid_rot(P, R2),
+    not diff(P, R1, R2),
+    not diff(P, R2, R1).
+
+smaller_equiv(P, R) :-
+    valid_rot(P, R),
+    valid_rot(P, R2),
+    R2 < R,
+    same_shape(P, R, R2).
+
+keep_rot(P, R) :-
+    valid_rot(P, R),
+    not smaller_equiv(P, R).
+
+% for the selection of the pieces depending on the associated_n value (n = number of layer)
+size4(P) :- bit(P,_,_,_), 4 = #count { X,Y,Z : bit(P,X,Y,Z) }.
+size5(P) :- bit(P,_,_,_), 5 = #count { X,Y,Z : bit(P,X,Y,Z) }.
+#const n=1.
+use(P) :-
+    piece(P),
+    associated_n(P, K),
+    K <= n.
+
+
+% p3(PIECE, VARIANT, X, Y, Z)
+p3(P, R, X, Y, Z) :-
+    norm_bit(P, R, X, Y, Z),
+    keep_rot(P, R),
+    use(P).
+
+% -----------------------
+% Define a weight for each material
+material_weight(iron, 7).
+material_weight(stone, 5).
+material_weight(wood, 3).
+material_weight(dirt, 1).

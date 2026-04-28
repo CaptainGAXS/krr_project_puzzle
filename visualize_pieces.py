@@ -5,32 +5,47 @@ import math
 
 def lire_pieces(filepath):
     pieces = {}
+    materials = {}
     with open(filepath, 'r') as f:
         for line in f:
             # Cherche les motifs de type bit(nom_piece, x, y, z)
-            matches = re.finditer(r'bit\(([^,]+),\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)\)', line)
-            for m in matches:
+            matches_bit = re.finditer(r'bit\(([^,]+),\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)\)', line)
+            for m in matches_bit:
                 name = m.group(1).strip()
                 x = int(m.group(2))
                 y = int(m.group(3))
                 z = int(m.group(4))
                 
                 if name not in pieces:
-                    # On utilise un set pour éviter les doublons (par ex: dans bit(3b, 0, 1, 0))
                     pieces[name] = set() 
                 pieces[name].add((x, y, z))
                 
+            # Cherche les motifs de type material(nom_piece, type)
+            matches_mat = re.finditer(r'material\(([^,]+),\s*([^)]+)\)', line)
+            for m in matches_mat:
+                name = m.group(1).strip()
+                mat = m.group(2).strip()
+                materials[name] = mat
+                
     # Conversion du set en liste
-    return {k: list(v) for k, v in pieces.items()}
+    return {k: list(v) for k, v in pieces.items()}, materials
 
-def afficher_pieces_3d(pieces):
+def afficher_pieces_3d(pieces, materials):
     num_pieces = len(pieces)
     cols = 10  # Plus de colonnes pour moins d'espacement vertical
     rows = math.ceil(num_pieces / cols)
     
+    # Couleurs par matériau
+    color_map = {
+        'wood': '#8B4513',   # marron
+        'iron': '#808080',   # gris
+        'dirt': '#2C2C2C',   # noir/très foncé (pour que les bordures noires restent un peu visibles)
+        'stone': '#4f4f4f'   # gris foncé
+    }
+    
     # Ajustement de la taille de la figure pour éviter l'écrasement
     fig = plt.figure(figsize=(12, 2.5 * rows))
-    fig.suptitle('Visualisation des pièces 3D', fontsize=16)
+    fig.suptitle('List of pieces', fontsize=16)
     
     for i, (name, coords) in enumerate(pieces.items(), 1):
         ax = fig.add_subplot(rows, cols, i, projection='3d')
@@ -55,9 +70,12 @@ def afficher_pieces_3d(pieces):
         for (x, y, z) in coords:
             voxels[x - X_min, y - Y_min, z - Z_min] = True
             
+        mat = materials.get(name, 'iron')
+        facecolor = color_map.get(mat, '#1f77b4')
+            
         # Affichage
-        ax.voxels(voxels, edgecolor='black', facecolors='#1f77b4', alpha=0.8)
-        ax.set_title(f'Pièce : {name} ({len(coords)} cubes)', fontsize=10, pad=0)
+        ax.voxels(voxels, edgecolor='black', facecolor=facecolor, alpha=0.9)
+        ax.set_title(f'Piece: {name}', fontsize=10, pad=0)
         
         # Cette ligne est la clé : elle force les proportions de la "boîte 3D" 
         # à correspondre exactement au nombre de cubes (size_x, size_y, size_z).
@@ -80,7 +98,7 @@ if __name__ == "__main__":
     # Assurez-vous que le chemin vers pieces.db est correct
     fichier_db = 'pieces.db'
     try:
-        pieces = lire_pieces(fichier_db)
-        afficher_pieces_3d(pieces)
+        pieces, materials = lire_pieces(fichier_db)
+        afficher_pieces_3d(pieces, materials)
     except FileNotFoundError:
         print(f"Erreur : Le fichier '{fichier_db}' est introuvable.")
