@@ -5,7 +5,6 @@ import math
 
 def lire_pieces(filepath):
     pieces = {}
-    materials = {}
     with open(filepath, 'r') as f:
         for line in f:
             # Cherche les motifs de type bit(nom_piece, x, y, z)
@@ -20,28 +19,13 @@ def lire_pieces(filepath):
                     pieces[name] = set() 
                 pieces[name].add((x, y, z))
                 
-            # Cherche les motifs de type material(nom_piece, type)
-            matches_mat = re.finditer(r'material\(([^,]+),\s*([^)]+)\)', line)
-            for m in matches_mat:
-                name = m.group(1).strip()
-                mat = m.group(2).strip()
-                materials[name] = mat
-                
     # Conversion du set en liste
-    return {k: list(v) for k, v in pieces.items()}, materials
+    return {k: list(v) for k, v in pieces.items()}
 
-def afficher_pieces_3d(pieces, materials):
+def afficher_pieces_3d(pieces):
     num_pieces = len(pieces)
     cols = 10  # Plus de colonnes pour moins d'espacement vertical
     rows = math.ceil(num_pieces / cols)
-    
-    # Couleurs par matériau
-    color_map = {
-        'wood': '#8B4513',   # marron
-        'iron': '#808080',   # gris
-        'dirt': '#2C2C2C',   # noir/très foncé (pour que les bordures noires restent un peu visibles)
-        'stone': '#4f4f4f'   # gris foncé
-    }
     
     # Ajustement de la taille de la figure pour éviter l'écrasement
     fig = plt.figure(figsize=(12, 2.5 * rows))
@@ -70,8 +54,7 @@ def afficher_pieces_3d(pieces, materials):
         for (x, y, z) in coords:
             voxels[x - X_min, y - Y_min, z - Z_min] = True
             
-        mat = materials.get(name, 'iron')
-        facecolor = color_map.get(mat, '#1f77b4')
+        facecolor = '#1f77b4'
             
         # Affichage
         ax.voxels(voxels, edgecolor='black', facecolor=facecolor, alpha=0.9)
@@ -96,9 +79,9 @@ def afficher_pieces_3d(pieces, materials):
 
 if __name__ == "__main__":
     # Assurez-vous que le chemin vers pieces.db est correct
-    fichier_db = 'pieces.db'
+    fichier_db = 'pieces_and_tower.db'
     try:
-        pieces, materials = lire_pieces(fichier_db)
-        afficher_pieces_3d(pieces, materials)
+        pieces = lire_pieces(fichier_db)
+        afficher_pieces_3d(pieces)
     except FileNotFoundError:
         print(f"Erreur : Le fichier '{fichier_db}' est introuvable.")
