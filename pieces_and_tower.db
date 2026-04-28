@@ -1,0 +1,157 @@
+% material(PIECE_NAME, MATERIAL)
+% associated_n(PIECE_NAME, N)
+% bit(PIECE_NAME, X, Y, Z)
+% - - -
+
+% 4 cubes
+% - - -
+bit(p4q2, 0, 0, 1).	bit(p4q2, 1, 0, 1).
+					bit(p4q2, 1, 1, 1).
+
+bit(p4q2, 0, 0, 0).
+% - - -
+bit(p4y, 0, 0, 0).	bit(p4y, 1, 0, 0).
+					bit(p4y, 1, 1, 0).
+
+bit(p4y, 1, 0, 1).
+
+% - - -
+bit(p4t, 0, 0, 0).	bit(p4t, 1, 0, 0).	bit(p4t, 2, 0, 0).
+					bit(p4t, 1, 1, 0).
+
+% - - -
+bit(p4o, 0, 0, 0).	bit(p4o, 1, 0, 0).
+bit(p4o, 0, 1, 0).	bit(p4o, 1, 1, 0).
+
+% - - -
+bit(p4s, 0, 0, 0).	bit(p4s, 1, 0, 0).
+					bit(p4s, 1, 1, 0).	bit(p4s, 2, 1, 0).
+
+% - - -
+bit(p4l, 0, 0, 0).	bit(p4l, 1, 0, 0).	bit(p4l, 2, 0, 0).
+bit(p4l, 0, 1, 0).
+
+% - - -
+bit(p4q1, 0, 0, 0).	bit(p4q1, 1, 0, 0).
+					bit(p4q1, 1, 1, 0).
+
+bit(p4q1, 0, 0, 1).
+
+% - - -
+bit(p4i, 0, 0, 0).	bit(p4i, 1, 0, 0).	bit(p4i, 2, 0, 0).	bit(p4i, 3, 0, 0).
+
+% ---------------------------------------
+% 5 cubes
+% ---------------------------------------
+bit(p5v, 0, 0, 0).	bit(p5v, 1, 0, 0).	bit(p5v, 2, 0, 0).
+bit(p5v, 0, 1, 0).
+bit(p5v, 0, 2, 0).
+
+
+% - - -
+bit(p5u, 0, 0, 0).	bit(p5u, 1, 0, 0).	bit(p5u, 2, 0, 0).
+bit(p5u, 0, 1, 0).						bit(p5u, 2, 1, 0).
+
+% - - -
+						bit(p5f3D, 1, 0, 0).	bit(p5f3D, 2, 0, 0).
+bit(p5f3D, 0, 1, 0).	bit(p5f3D, 1, 1, 0).
+					    bit(p5f3D, 1, 1, 1).
+
+% - - -
+bit(p5t, 0, 0, 0).	bit(p5t, 1, 0, 0).	bit(p5t, 2, 0, 0).
+					bit(p5t, 1, 1, 0).
+					bit(p5t, 1, 2, 0).
+
+% - - -
+bit(p5v3D, 0, 0, 0).	bit(p5v3D, 1, 0, 0).	bit(p5v3D, 2, 0, 0).
+bit(p5v3D, 0, 1, 0).
+bit(p5v3D, 0, 1, 1).
+
+% - - -
+bit(p5t3D, 0, 0, 0).	bit(p5t3D, 1, 0, 0).	bit(p5t3D, 2, 0, 0).
+						bit(p5t3D, 1, 1, 0).
+						bit(p5t3D, 1, 0, 1).
+
+% - - -
+bit(p5w, 0, 0, 0).
+bit(p5w, 0, 1, 0). bit(p5w, 1, 1, 0).
+				   bit(p5w, 1, 2, 0). bit(p5w, 2, 2, 0).
+
+% - - -
+                   bit(p5x, 1, 0, 0).
+bit(p5x, 0, 1, 0). bit(p5x, 1, 1, 0). bit(p5x, 2, 1, 0).
+				   bit(p5x, 1, 2, 0).
+
+% ----------------------------------------------------
+piece(P) :- bit(P, _, _, _).
+% ----------------------------------------------------
+% ----------------------------------------------------
+% ----------------------------------------------------
+% base piece and variants generation
+
+% The 24 possible rotations of a 3D-pieces
+% rot(ID, Permutation_X, Permutation_Y, Permutation_Z, SignX, SignY, SignZ)
+rot(1,1,2,3, 1,1,1).  rot(2,1,2,3, 1,-1,-1). rot(3,1,2,3, -1,1,-1). rot(4,1,2,3, -1,-1,1).
+rot(5,1,3,2, 1,1,-1). rot(6,1,3,2, 1,-1,1).  rot(7,1,3,2, -1,1,1).  rot(8,1,3,2, -1,-1,-1).
+rot(9,2,1,3, 1,1,-1). rot(10,2,1,3, 1,-1,1). rot(11,2,1,3, -1,1,1). rot(12,2,1,3, -1,-1,-1).
+rot(13,2,3,1, 1,1,1). rot(14,2,3,1, 1,-1,-1). rot(15,2,3,1, -1,1,-1). rot(16,2,3,1, -1,-1,1).
+rot(17,3,1,2, 1,1,1). rot(18,3,1,2, 1,-1,-1). rot(19,3,1,2, -1,1,-1). rot(20,3,1,2, -1,-1,1).
+rot(21,3,2,1, 1,1,-1). rot(22,3,2,1, 1,-1,1). rot(23,3,2,1, -1,1,1). rot(24,3,2,1, -1,-1,-1).
+
+% Apply a rotation R to the bits of a piece P, with scaling by signs (SX, SY, SZ)
+apply_rot(P, R, SX*X, SY*Y, SZ*Z) :- bit(P, X, Y, Z), rot(R, 1, 2, 3, SX, SY, SZ).
+apply_rot(P, R, SX*X, SY*Z, SZ*Y) :- bit(P, X, Y, Z), rot(R, 1, 3, 2, SX, SY, SZ).
+apply_rot(P, R, SX*Y, SY*X, SZ*Z) :- bit(P, X, Y, Z), rot(R, 2, 1, 3, SX, SY, SZ).
+apply_rot(P, R, SX*Y, SY*Z, SZ*X) :- bit(P, X, Y, Z), rot(R, 2, 3, 1, SX, SY, SZ).
+apply_rot(P, R, SX*Z, SY*X, SZ*Y) :- bit(P, X, Y, Z), rot(R, 3, 1, 2, SX, SY, SZ).
+apply_rot(P, R, SX*Z, SY*Y, SZ*X) :- bit(P, X, Y, Z), rot(R, 3, 2, 1, SX, SY, SZ).
+
+% Normalize the rotated piece by translating it so that its minimum coordinates are at the origin (0,0,0)
+min_coords(P, R, MX, MY, MZ) :- 
+    apply_rot(P, R, _, _, _),
+    MX = #min { X : apply_rot(P, R, X, _, _) },
+    MY = #min { Y : apply_rot(P, R, _, Y, _) },
+    MZ = #min { Z : apply_rot(P, R, _, _, Z) }.
+
+norm_bit(P, R, X-MX, Y-MY, Z-MZ) :- 
+    apply_rot(P, R, X, Y, Z), 
+    min_coords(P, R, MX, MY, MZ).
+
+% Keep only unique variants of each piece (remove duplicates)
+rot_id(R) :- rot(R, _, _, _, _, _, _).
+
+valid_rot(P, R) :-
+    piece(P),
+    rot_id(R),
+    norm_bit(P, R, _, _, _).
+
+diff(P, R1, R2) :-
+    valid_rot(P, R1),
+    valid_rot(P, R2),
+    norm_bit(P, R1, X, Y, Z),
+    not norm_bit(P, R2, X, Y, Z).
+
+same_shape(P, R1, R2) :-
+    valid_rot(P, R1), % to have safe rules
+    valid_rot(P, R2),
+    not diff(P, R1, R2),
+    not diff(P, R2, R1).
+
+smaller_equiv(P, R) :-
+    valid_rot(P, R),
+    valid_rot(P, R2),
+    R2 < R,
+    same_shape(P, R, R2).
+
+keep_rot(P, R) :-
+    valid_rot(P, R),
+    not smaller_equiv(P, R).
+% -----------------------------------------------------------------------
+% -----------------------------------------------------------------------
+% -----------------------------------------------------------------------
+% -----------------------------------------------------------------------
+
+% The tower
+width(3). depth(3). height(n). 
+
+cube(X, Y, Z) :- width(W), depth(D), height(H), X=0..W-1, Y=0..D-1, Z=0..H-1.

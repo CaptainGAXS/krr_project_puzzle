@@ -3,29 +3,22 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-def read_materials(db_path="pieces.db"):
-    """Lit le fichier pieces.db pour extraire les matériaux associés aux pièces et leurs poids."""
-    materials = {}
-    material_weights = {}
-    try:
-        with open(db_path, "r", encoding="utf-8") as f:
-            content = f.read()
-            # Cherche material(piece, materiel).
-            matches = re.findall(r'material\(([^,]+),\s*([^)]+)\)\.', content)
-            for piece, mat in matches:
-                materials[piece.strip()] = mat.strip()
-            # Cherche material_weight(materiel, poids).
-            weight_matches = re.findall(r'material_weight\(([^,]+),\s*(\d+)\)\.', content)
-            for mat, weight in weight_matches:
-                material_weights[mat.strip()] = int(weight)
-    except FileNotFoundError:
-        print(f"Attention : {db_path} introuvable.")
-    return materials, material_weights
-
 def parse_clingo_input(text):
-    """Extrait tous les occ(P,X,Y,Z) et layer_weight(Z,W) d'une chaîne de texte."""
+    """Extrait tous les occ(P,X,Y,Z), layer_weight(Z,W), material(P,M) et material_weight(M,W) d'une chaîne de texte."""
     parsed_occ = []
     weights = {}
+    materials = {}
+    material_weights = {}
+    
+    # Parse material(...)
+    matches_mat = re.findall(r'material\(([^,]+),\s*([^)]+)\)', text)
+    for m in matches_mat:
+        materials[m[0].strip()] = m[1].strip()
+        
+    # Parse material_weight(...)
+    matches_mw = re.findall(r'material_weight\(([^,]+),\s*(\d+)\)', text)
+    for m in matches_mw:
+        material_weights[m[0].strip()] = int(m[1].strip())
     
     # Parse occ(...)
     pattern_occ = r'occ\(([^,]+),(\d+),(\d+),(\d+)\)'
@@ -46,7 +39,7 @@ def parse_clingo_input(text):
         z, w = int(match[0]), int(match[1])
         weights[z] = w
         
-    return parsed_occ, max_x + 1, max_y + 1, max_z + 1, weights
+    return parsed_occ, max_x + 1, max_y + 1, max_z + 1, weights, materials, material_weights
 
 def visualize(parsed_data, dimensions, materials, material_weights, weights):
     if not parsed_data:
@@ -132,7 +125,7 @@ def visualize(parsed_data, dimensions, materials, material_weights, weights):
     plt.show()
 
 if __name__ == "__main__":
-    print("Collez la sortie de clingo contenant vos occ(...) puis appuyez sur Entrée pour valider :")
+    print("Collez la sortie de clingo contenant vos occ(...), material(...) etc. puis appuyez sur Entrée pour valider :")
     try:
         user_input = input()
     except KeyboardInterrupt:
@@ -140,8 +133,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # Chargement
-    materials, material_weights = read_materials("pieces.db")
-    parsed_data, dim_x, dim_y, dim_z, weights = parse_clingo_input(user_input)
+    parsed_data, dim_x, dim_y, dim_z, weights, materials, material_weights = parse_clingo_input(user_input)
     
     # Affichage
     visualize(parsed_data, (dim_x, dim_y, dim_z), materials, material_weights, weights)

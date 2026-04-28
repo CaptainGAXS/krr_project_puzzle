@@ -1,32 +1,12 @@
-% The tower
-width(3). depth(3). height(n). 
-
-cube(X, Y, Z) :- width(W), depth(D), height(H), X=0..W-1, Y=0..D-1, Z=0..H-1.
-
 % -------------------------------------------------
-% selection of the pieces
-selected_piece(P) :- piece_used(P), not not_selected_piece(P).
-not_selected_piece(P) :- piece_used(P), not selected_piece(P).
-
-% list of available variants
-available_variant(P, V) :- p3(P, V, _, _, _).
-
-% -------------------------------------------------
-% number of cubes of each piece (volume)
-piece_volume(P, Vol) :- piece_used(P), Vol = #count { DX, DY, DZ : bit(P, DX, DY, DZ) }.
-
-% the total volume of the selected pieces must be equal to the tower volume
-:- width(W), depth(D), height(H), #sum { Vol, P : selected_piece(P), piece_volume(P, Vol) } != W*D*H.
-
-% -------------------------------------------------
-% piece placement
+% Piece placement
 
 % Invalid placement: a piece goes out of the boundaries of the tower
 invalid_placement(P, V, X, Y, Z) :- 
     available_variant(P, V), cube(X, Y, Z), 
     p3(P, V, DX, DY, DZ), not cube(X+DX, Y+DY, Z+DZ).
 
-% Valid placement: it stays entirely inside the 4x4x8 grid
+% Valid placement: it stays entirely inside the grid
 valid_placement(P, V, X, Y, Z) :- 
     available_variant(P, V), cube(X, Y, Z), 
     not invalid_placement(P, V, X, Y, Z).
@@ -39,11 +19,23 @@ occ(P, X+DX, Y+DY, Z+DZ) :-
     placement(P, V, X, Y, Z),
     p3(P, V, DX, DY, DZ).
 
-% not overlapping (P1 < P2 restricts symmetries logically)
-:- occ(P1, X, Y, Z), occ(P2, X, Y, Z), P1 < P2.
+% not overlapping
+:- occ(P1, X, Y, Z), occ(P2, X, Y, Z), P1 != P2.
+
+% -----
+% Limit symmetries
+% Identify the first placed piece by its ID
+first_piece(MinP) :- MinP = #min { P : selected_piece(P) }.
+
+% Break X-axis and Y-axis reflections & rotations on the 3x3 base
+% Limit the X origin parameter to at most 1 (width/2)
+:- first_piece(P), placement(P, _, X, _, _), X > 1.
+
+% Limit the Y origin to be <= X to break diagonal reflection symmetry
+:- first_piece(P), placement(P, _, X, Y, _), Y > X.
 
 % -------------------------------------------------
-
+% Weight constraint
 % 4 lateral directions (ignore top and bottom)
 face_dir(1, 0, 0). face_dir(-1, 0, 0).
 face_dir(0, 1, 0). face_dir( 0,-1, 0).
@@ -65,26 +57,16 @@ layer_weight(Z, W) :-
     layer(Z), 
     W = #sum { N*FW, P, X, Y : occ(P, X, Y, Z), border_faces(X,Y,N), material(P, Mat), material_weight(Mat, FW) }.
 
-% A layer Z must not have a strictly higher weight than the layer ABOVE it (Z+1) (y-axis down).
-:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 > W2.
-
+% Each layer must have a strictly higher weight than the layer above it (W(Z) > W(Z+1))
+:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 < W2.
 % variations/challenges:
-% Each layer must have a strictly higher weight than the layer above it, with a maximum weight difference of d.
+% with a maximum weight difference of d.
 #const d=100000.
-:- layer_weight(Z, W1), layer_weight(Z+1, W2), W2 - W1 > d.
+:- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 - W2 > d.
 
 % -------------------------------------------------
-% Limit symmetries
-% Identify the first placed piece by its ID
-first_piece(MinP) :- MinP = #min { P : selected_piece(P) }.
-
-% Break X-axis and Y-axis reflections & rotations on the 3x3 base
-% We limit the X origin parameter to at most 1 (width/2)
-:- first_piece(P), placement(P, _, X, _, _), X > 1.
-
-% We limit the Y origin to be <= X to break diagonal reflection symmetry
-:- first_piece(P), placement(P, _, X, Y, _), Y > X.
-
-
+#show selected_piece/1.
+#show material/2.
+#show material_weight/2.
 #show occ/4.
 #show layer_weight/2.
