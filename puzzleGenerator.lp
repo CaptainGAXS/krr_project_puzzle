@@ -13,7 +13,7 @@ n { selected_piece(P) : piece(P), piece_volume(P, 5) } n.
 
 % Prioritize the selection of pieces with higher volume
 #heuristic placement(P, V, X, Y, Z) : valid_placement(P, V, X, Y, Z). [100, level]
-#heuristic material(P, M) : selected_piece(P), list_material(M). [1, level]
+#heuristic material(P, M) : selected_piece(P), list_material(M). [1, sign]
 % -------------------------------------------------
 list_material(dirt).
 list_material(wood).
