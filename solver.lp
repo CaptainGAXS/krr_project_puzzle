@@ -68,9 +68,13 @@ layer_weight(Z, W) :-
 % A layer Z must not have a strictly higher weight than the layer ABOVE it (Z+1) (y-axis down).
 :- layer_weight(Z, W1), layer_weight(Z+1, W2), W1 > W2.
 
+% variations/challenges:
+% Each layer must have a strictly higher weight than the layer above it, with a maximum weight difference of d.
+#const d=100000.
+:- layer_weight(Z, W1), layer_weight(Z+1, W2), W2 - W1 > d.
+
 % -------------------------------------------------
-% SYMMETRY BREAKING
-% -------------------------------------------------
+% Limit symmetries
 % Identify the first placed piece by its ID
 first_piece(MinP) :- MinP = #min { P : selected_piece(P) }.
 
