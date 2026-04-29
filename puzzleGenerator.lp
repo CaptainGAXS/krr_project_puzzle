@@ -13,11 +13,12 @@ n { selected_piece(P) : piece(P), piece_volume(P, 5) } n.
 
 % Prioritize the selection of pieces with higher volume
 #heuristic placement(P, V, X, Y, Z) : valid_placement(P, V, X, Y, Z). [100, level]
-#heuristic material(P, M) : selected_piece(P), list_material(M). [1, level]
+#heuristic material(P, M) : selected_piece(P), list_material(M). [1, sign]
 % -------------------------------------------------
 list_material(dirt).
 list_material(wood).
 list_material(stone).
+list_material(iron).
 
 % Attribute a material to each piece
 1 { material(P, M) : list_material(M) } 1 :- selected_piece(P).
@@ -31,6 +32,7 @@ p3(P, R, X, Y, Z) :-
     norm_bit(P, R, X, Y, Z),
     keep_rot(P, R).
 
-material_weight(stone, 5).
-material_weight(wood, 3).
+material_weight(iron, 4).
+material_weight(stone, 3).
+material_weight(wood, 2).
 material_weight(dirt, 1).

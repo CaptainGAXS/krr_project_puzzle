@@ -70,7 +70,7 @@ p3(P, R, X, Y, Z) :-
 
 % -----------------------
 % Define a weight for each material
-material_weight(iron, 7).
-material_weight(stone, 5).
-material_weight(wood, 3).
+material_weight(iron, 4).
+material_weight(stone, 3).
+material_weight(wood, 2).
 material_weight(dirt, 1).
