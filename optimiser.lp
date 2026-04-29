@@ -1,0 +1,1 @@
+#maximize { W,Z : layer_weight(Z,W) }.
