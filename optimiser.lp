@@ -1,1 +1,1 @@
-#maximize { W,Z : layer_weight(Z,W) }.
+#minimize { W,Z : layer_weight(Z,W) }.
