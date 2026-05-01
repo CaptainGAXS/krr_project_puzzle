@@ -24,7 +24,7 @@ def lire_pieces(filepath):
 
 def afficher_pieces_3d(pieces):
     num_pieces = len(pieces)
-    cols = 10  # Plus de colonnes pour moins d'espacement vertical
+    cols = 7  # Plus de colonnes pour moins d'espacement vertical
     rows = math.ceil(num_pieces / cols)
     
     # Ajustement de la taille de la figure pour éviter l'écrasement
