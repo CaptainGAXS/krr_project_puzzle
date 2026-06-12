@@ -47,9 +47,9 @@ face_dir(0, 1, 0). face_dir( 0,-1, 0).
 occupied(X, Y, Z) :- occ(_, X, Y, Z).
 
 % Number of exposed lateral faces for each (X,Y) coordinate of the grid.
-exposed(0,0,2). exposed(0,1,1). exposed(0,2,2).
+exposed(0,0,1). exposed(0,1,1). exposed(0,2,1).
 exposed(1,0,1). exposed(1,1,0). exposed(1,2,1).
-exposed(2,0,2). exposed(2,1,1). exposed(2,2,2).
+exposed(2,0,1). exposed(2,1,1). exposed(2,2,1).
 
 % Calculate each layer weight
 layer(Z) :- height(H), Z = 0..H-1.
